@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {s} from './components/styles/backbonestyles.js';
+import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
 class signup extends Component {
   render() {

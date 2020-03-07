@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
-import {s} from './components/styles/backbonestyles.js';
-import {Icon} from 'react-native-elements';
+import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 import land3 from './images/land3.jpeg';
 
 class Login extends Component {
@@ -21,12 +20,6 @@ class Login extends Component {
             placeholderTextColor={'black'}
             underlineColorAndroid="transparent"
           />
-          <Icon
-            name={'person'}
-            size={23}
-            color={'#002600'}
-            style={s.inputIcon}
-          />
         </View>
         <View>
           <TextInput
@@ -36,12 +29,6 @@ class Login extends Component {
             placeholderTextColor={'black'}
             underlineColorAndroid="transparent"
             Required
-          />
-          <Icon
-            name={'ios-person'}
-            size={23}
-            color={'#002600'}
-            style={s.inputIcon}
           />
         </View>
         <TouchableOpacity style={s.loginBtn}>

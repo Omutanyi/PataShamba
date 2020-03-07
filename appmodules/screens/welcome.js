@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
-import {s} from './components/styles/backbonestyles.js';
+import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
 class welcome extends Component {
   constructor(props) {
