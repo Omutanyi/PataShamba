@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
-class welcome extends Component {
+class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,10 +19,12 @@ class welcome extends Component {
   }
   render() {
     return (
-      <View>
-        <Text>PATA SHAMBA</Text>
-        <Text>The solution to all your land aspirations</Text>
-        <Text>WELCOME</Text>
+      <View style={s.primaryView}>
+        <Text style={s.primaryText}>PATA SHAMBA</Text>
+        <Text style={s.secondaryText}>
+          The solution to all your land aspirations
+        </Text>
+        <Text style={s.primaryText}>WELCOME</Text>
         <SliderBox
           images={this.state.images}
           sliderBoxHeight={200}
@@ -55,17 +57,21 @@ class welcome extends Component {
             backgroundColor: 'rgba(128, 128, 128, 0.92)',
           }}
           ImageComponentStyle={{borderRadius: 15, width: '97%', marginTop: 5}}
-          imageLoadingColor="#2196F3"
+          imageLoadingColor="#FFC107"
         />
-        <TouchableOpacity style={s.loginBtn}>
-          <Text style={s.loginBtnText}>LOGIN</Text>
+        <TouchableOpacity
+          style={s.primaryButton}
+          onPress={() => this.props.navigation.navigate('Login')}>
+          <Text style={s.primaryText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.signupBtn}>
-          <Text style={s.loginBtnText}>LOGIN</Text>
+        <TouchableOpacity
+          style={s.secondaryButton}
+          onPress={() => this.props.navigation.navigate('Signup')}>
+          <Text style={s.primaryText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
 
-export default welcome;
+export default WelcomeScreen;

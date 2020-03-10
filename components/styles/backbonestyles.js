@@ -11,16 +11,53 @@ const s = StyleSheet.create({
     height: 125,
     borderRadius: 10,
   },
-  View: {
+  primaryView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#388E3C',
+    textColor: '#FFFFFF',
+  },
+  secondaryView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#C8E6C9',
+  },
+  primaryNavigation: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#388E3C',
+    textColor: '#FFFFFF',
+  },
+
+  textPrimary: {
+    color: '#FFFFFF',
+  },
+  primaryText: {
+    color: '#212121',
+  },
+  secondaryText: {
+    color: '#757575',
+  },
+  dividerColor: {
+    color: '#BDBDBD',
   },
   appTitle: {
     fontWeight: '700',
     fontSize: 25,
     fontFamily: 'notoserif',
     bottom: 30,
+    marginTop: 0,
+    color: '#ffa500',
+  },
+  appTitleW: {
+    fontWeight: '700',
+    fontSize: 25,
+    fontFamily: 'notoserif',
+    bottom: 30,
+    textAlign: 'center',
     marginTop: 0,
     color: '#ffa500',
   },
@@ -58,8 +95,8 @@ const s = StyleSheet.create({
     marginTop: 0,
     color: '#ffedcc',
   },
-  loginBtn: {
-    backgroundColor: '#ffa500',
+  primaryButton: {
+    backgroundColor: '#FFC107',
     width: WIDTH - 200,
     height: 45,
     borderRadius: 10,
@@ -70,10 +107,9 @@ const s = StyleSheet.create({
     textAlign: 'center',
     backfaceVisibility: 'hidden',
   },
-  signupBtn: {
-    backgroundColor: 'transparent',
+  secondaryButton: {
+    backgroundColor: '#FFC107',
     borderColor: '#ffa500',
-    borderStyle: 'dotted',
     width: WIDTH - 200,
     height: 25,
     borderRadius: 10,
@@ -99,6 +135,12 @@ const s = StyleSheet.create({
     left: 10,
     fontFamily: 'notoserif',
     color: '#191000',
+  },
+
+  welcomeView: {
+    backgroundColor: '#527318',
+    height: '100%',
+    textAlign: 'center',
   },
 });
 
