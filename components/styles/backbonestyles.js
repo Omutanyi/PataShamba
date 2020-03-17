@@ -16,7 +16,6 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#388E3C',
-    textColor: '#FFFFFF',
   },
   secondaryView: {
     flex: 1,
@@ -29,7 +28,6 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#388E3C',
-    textColor: '#FFFFFF',
   },
 
   textPrimary: {

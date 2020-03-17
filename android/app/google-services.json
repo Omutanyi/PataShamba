@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "794666915235",
+    "firebase_url": "https://pata-shamba-fcb1c.firebaseio.com",
+    "project_id": "pata-shamba-fcb1c",
+    "storage_bucket": "pata-shamba-fcb1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794666915235:android:fb8afe3ff1430a68bd3616",
+        "android_client_info": {
+          "package_name": "com.buylands.PataShamba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794666915235-53g5tibiqvvhkga3583li81pj430578h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO93NCnE05BlbvarNb04iDMN_z4ufH9wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794666915235-53g5tibiqvvhkga3583li81pj430578h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

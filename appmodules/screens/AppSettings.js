@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-class Chat extends Component {
+export class AppSettings extends Component {
   render() {
     return (
       <View>
@@ -11,4 +11,4 @@ class Chat extends Component {
   }
 }
 
-export default Chat;
+export default AppSettings;

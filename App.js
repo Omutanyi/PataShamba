@@ -1,5 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
+import {StyleSheet} from 'react-native';
 // import Howitworks from './appmodules/screens/howitworks.js';
 import login from '/home/javier/final_Project/PataShamba/appmodules/screens/login.js';
 import Signup from '/home/javier/final_Project/PataShamba/appmodules/screens/signup.js';
@@ -28,13 +30,19 @@ const PataShambaTabs = createMaterialBottomTabNavigator();
 export default class App extends Component {
   createBottomTabs = () => {
     return (
-      <PataShambaTabs.Navigator>
+      <PataShambaTabs.Navigator
+        initialRouteName="Home"
+        barStyle={{
+          backgroundColor: '#4CAF50',
+          activeTintColor: '#FFFF',
+          inactiveTintColor: '#FFC107',
+        }}>
         <PataShambaTabs.Screen
           name="Home"
           component={Home}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={35} name={'home'} />
+              <Icon style={[{color: '#ffedcc'}]} size={20} name={'home'} />
             ),
           }}
         />
@@ -43,7 +51,7 @@ export default class App extends Component {
           component={Filter}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={29} name={'search'} />
+              <Icon style={[{color: '#ffedcc'}]} size={20} name={'filter'} />
             ),
           }}
         />
@@ -52,7 +60,7 @@ export default class App extends Component {
           component={Chat}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={29} name={'message'} />
+              <Icon style={[{color: '#ffedcc'}]} size={20} name={'message'} />
             ),
           }}
         />
@@ -61,7 +69,7 @@ export default class App extends Component {
           component={More}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={29} name={'more'} />
+              <Icon style={[{color: '#ffedcc'}]} size={20} name={'more'} />
             ),
           }}
         />
@@ -88,14 +96,64 @@ export default class App extends Component {
             name="Welcome"
             component={Welcome}
             options={{
-              headerVisibility: 'none',
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
             }}
           />
-          <Stack.Screen name="Login" component={login} />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="Pata Shamba" children={this.createBottomTabs} />
+          <Stack.Screen
+            name="Login"
+            component={login}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Pata Shamba"
+            children={this.createBottomTabs}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
 }
+
+const style = StyleSheet.create({
+  welcomeHeader: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#388E3C',
+  },
+});

@@ -1,8 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
+
+const {width: WIDTH} = Dimensions.get('window');
+const d = Dimensions.get('window');
 
 class WelcomeScreen extends Component {
   constructor(props) {
@@ -19,19 +28,18 @@ class WelcomeScreen extends Component {
   }
   render() {
     return (
-      <View style={s.primaryView}>
-        <Text style={s.primaryText}>PATA SHAMBA</Text>
-        <Text style={s.secondaryText}>
+      <View style={welcome.primaryView}>
+        <Text style={welcome.titleText}>PATA SHAMBA</Text>
+        <Text style={welcome.primaryText}>
           The solution to all your land aspirations
         </Text>
-        <Text style={s.primaryText}>WELCOME</Text>
         <SliderBox
           images={this.state.images}
           sliderBoxHeight={200}
           onCurrentImagePressed={index =>
             console.warn(`image ${index} pressed`)
           }
-          dotColor="#FFEE58"
+          dotColor="#FFC107"
           inactiveDotColor="#90A4AE"
           paginationBoxVerticalPadding={20}
           autoplay
@@ -50,7 +58,7 @@ class WelcomeScreen extends Component {
           dotStyle={{
             width: 10,
             height: 10,
-            borderRadius: 5,
+            borderRadius: 7,
             marginHorizontal: 0,
             padding: 0,
             margin: 0,
@@ -60,18 +68,71 @@ class WelcomeScreen extends Component {
           imageLoadingColor="#FFC107"
         />
         <TouchableOpacity
-          style={s.primaryButton}
+          style={welcome.loginBtn}
           onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={s.primaryText}>LOGIN</Text>
+          <Text style={welcome.btnText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={s.secondaryButton}
+          style={welcome.signupBtn}
           onPress={() => this.props.navigation.navigate('Signup')}>
-          <Text style={s.primaryText}>Sign Up</Text>
+          <Text style={welcome.btnText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const welcome = StyleSheet.create({
+  primaryView: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#388E3C',
+  },
+  titleText: {
+    alignSelf: 'center',
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  primaryText: {
+    alignSelf: 'center',
+    color: '#C8E6C9',
+    fontWeight: '100',
+    fontSize: 13,
+  },
+  loginBtn: {
+    backgroundColor: '#FFC107',
+    width: WIDTH - 200,
+    height: 45,
+    borderRadius: 0,
+    marginTop: 25,
+    color: 'white',
+    marginHorizontal: 25,
+    alignItems: 'center',
+    alignSelf: 'center',
+    backfaceVisibility: 'hidden',
+  },
+  signupBtn: {
+    backgroundColor: '#FFC107',
+    width: WIDTH - 200,
+    height: 45,
+    borderRadius: 0,
+    marginTop: 25,
+    color: 'white',
+    marginHorizontal: 25,
+    alignItems: 'center',
+    alignSelf: 'center',
+    backfaceVisibility: 'hidden',
+  },
+  btnText: {
+    fontWeight: '500',
+    fontSize: 17,
+    top: 10,
+    left: 0,
+    right: 10,
+    fontFamily: 'notoserif',
+    color: '#FFFFFF',
+  },
+});
 
 export default WelcomeScreen;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-export class Options extends Component {
+export class PurchaseStatus extends Component {
   render() {
     return (
       <View>
@@ -11,4 +11,4 @@ export class Options extends Component {
   }
 }
 
-export default Options;
+export default PurchaseStatus;
