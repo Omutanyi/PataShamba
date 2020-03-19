@@ -13,6 +13,13 @@ import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbon
 const {width: WIDTH} = Dimensions.get('window');
 
 class Signup extends Component {
+  state = {
+    email: '',
+    password: '',
+    phone: '',
+    username: '',
+    passwordConfirm: '',
+  };
   render() {
     return (
       <View style={signupStyles.primaryView}>
@@ -23,30 +30,39 @@ class Signup extends Component {
         <TextInput
           style={signupStyles.input}
           placeholder={'Username'}
+          value={this.state.username}
           placeholderTextColor={'black'}
+          onChangeText={username => this.setState({username})}
           underlineColorAndroid="transparent"
         />
         <TextInput
           style={signupStyles.input}
           placeholder={'Email'}
+          value={this.state.email}
           placeholderTextColor={'black'}
+          onChangeText={email => this.setState({email})}
           underlineColorAndroid="transparent"
         />
         <TextInput
           style={signupStyles.input}
           placeholder={'Phone'}
+          value={this.state.phone}
           placeholderTextColor={'black'}
+          onChangeText={phone => this.setState({phone})}
           underlineColorAndroid="transparent"
         />
         <TextInput
           style={signupStyles.input}
           placeholder={'Password'}
+          value={this.state.password}
           placeholderTextColor={'black'}
+          onChangeText={password => this.setState({password})}
           underlineColorAndroid="transparent"
         />
         <TextInput
           style={signupStyles.input}
           placeholder={'Confirm Password'}
+          value={this.state.passwordConfirm}
           placeholderTextColor={'black'}
           underlineColorAndroid="transparent"
         />

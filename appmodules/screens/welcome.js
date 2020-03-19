@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const {width: WIDTH} = Dimensions.get('window');
 const d = Dimensions.get('window');
@@ -17,6 +18,7 @@ class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      spinner: false,
       images: [
         'https://images.unsplash.com/photo-1554129351-dd3625ed5f30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
         'https://images.unsplash.com/photo-1562939568-91cdb83881ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
@@ -25,6 +27,14 @@ class WelcomeScreen extends Component {
         'https://images.unsplash.com/photo-1518655513281-e90740bd56b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
       ],
     };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        spinner: !this.state.spinner,
+      });
+    }, 3000);
   }
   render() {
     return (
@@ -71,6 +81,11 @@ class WelcomeScreen extends Component {
           style={welcome.loginBtn}
           onPress={() => this.props.navigation.navigate('Login')}>
           <Text style={welcome.btnText}>LOGIN</Text>
+          <Spinner
+            visible={this.state.spinner}
+            textContent={'Loading...'}
+            textStyle={welcome.spinnerTextStyle}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           style={welcome.signupBtn}
@@ -87,6 +102,9 @@ const welcome = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#388E3C',
+  },
+  spinnerTextStyle: {
+    color: '#FFC107',
   },
   titleText: {
     alignSelf: 'center',

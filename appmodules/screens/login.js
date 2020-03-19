@@ -16,7 +16,8 @@ const d = Dimensions.get('window');
 
 class login extends Component {
   state = {
-    name: '',
+    email: '',
+    password: '',
   };
 
   continue = () => {
@@ -35,16 +36,20 @@ class login extends Component {
           <View>
             <TextInput
               style={loginStyle.input}
-              placeholder={'Username'}
-              onChangeText={name => this.setState({name})}
+              placeholder={'Enter your email address'}
+              value={this.state.email}
+              onChangeText={email => this.setState({email})}
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
+              autoCapitalize="none"
             />
           </View>
           <View>
             <TextInput
               style={loginStyle.input}
+              value={this.state.password}
               placeholder={'Password'}
+              onChangeText={password => this.setState({password})}
               secureTextEntry={true}
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
