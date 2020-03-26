@@ -7,6 +7,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
@@ -16,16 +17,28 @@ const d = Dimensions.get('window');
 
 class login extends Component {
   state = {
-    email: '',
+    username: '',
     password: '',
   };
 
-  continue = () => {
-    this.props.navigation.navigate('Pata Shamba');
-  };
   signup = () => {
     this.props.navigation.navigate('Signup');
   };
+
+  checkLogin() {
+    const {username, password} = this.state;
+    // console.warn(username, password);
+    if (username == 'Admin' && password == 'Admin') {
+      this.props.navigation.navigate('Pata Shamba');
+    } else {
+      // console.warn('Permission denied');
+      Alert.alert('Error', 'username/password mismatch', [
+        {
+          Text: 'Okay',
+        },
+      ]);
+    }
+  }
   render() {
     return (
       <View style={loginStyle.primaryView}>
@@ -36,9 +49,9 @@ class login extends Component {
           <View>
             <TextInput
               style={loginStyle.input}
-              placeholder={'Enter your email address'}
-              value={this.state.email}
-              onChangeText={email => this.setState({email})}
+              placeholder={'Enter your username address'}
+              value={this.state.username}
+              onChangeText={username => this.setState({username})}
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
@@ -58,7 +71,7 @@ class login extends Component {
           </View>
           <TouchableOpacity
             style={loginStyle.loginBtn}
-            onPress={() => this.props.navigation.navigate('Pata Shamba')}>
+            onPress={() => this.checkLogin()}>
             <Text style={loginStyle.btnText}>LOGIN</Text>
           </TouchableOpacity>
         </View>

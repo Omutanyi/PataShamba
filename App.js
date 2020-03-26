@@ -11,6 +11,11 @@ import Chat from '/home/javier/final_Project/PataShamba/appmodules/screens/Chat.
 import Filter from '/home/javier/final_Project/PataShamba/appmodules/screens/Filter.js';
 import More from '/home/javier/final_Project/PataShamba/appmodules/screens/More.js';
 
+// screens in the more tab
+import SellOpt from 'appmodules/screens/SellOpt.js';
+import Saved from 'appmodules/screens/Saved.js';
+import PurchaseStatus from 'appmodules/screens/PurchaseStatus.js';
+
 //import {Profile} from '/home/javier/final_Project/PataShamba/appmodules/screens/Profile.js';
 //import {Settings} from '/home/javier/final_Project/PataShamba/appmodules/screens/Settings.js';
 //import {Logout} from '/home/javier/final_Project/PataShamba/appmodules/screens/Logout.js';
@@ -134,6 +139,45 @@ export default class App extends Component {
           <Stack.Screen
             name="Pata Shamba"
             children={this.createBottomTabs}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Sell your piece of land"
+            component={SellOpt}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Saved Ads"
+            component={Saved}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Purchase Status"
+            component={PurchaseStatus}
             options={{
               headerStyle: {
                 backgroundColor: '#388E3C',

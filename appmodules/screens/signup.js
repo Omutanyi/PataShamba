@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import {
   View,
@@ -6,6 +7,7 @@ import {
   Text,
   Dimensions,
   TextInput,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
@@ -20,6 +22,29 @@ class Signup extends Component {
     username: '',
     passwordConfirm: '',
   };
+
+  signUp() {
+    const {email, password, phone, username, passwordConfirm} = this.status;
+    if (password && email && phone && username && passwordConfirm != null) {
+      if (password == passwordConfirm) {
+              this.props.navigation.navigate('Pata Shamba');
+      } else {
+       Alert.alert('Error', 'Please make sure your passwords match', [
+        {
+          Text: 'Okay',
+        },
+      ]); 
+      }
+    } else {
+      // console.warn('permission denied')
+      Alert.alert('Error', 'Please make sure to fill all the fields as indicated to proceed', [
+        {
+          Text: 'Okay',
+        },
+      ]);
+    }
+  }
+
   render() {
     return (
       <View style={signupStyles.primaryView}>
@@ -66,7 +91,9 @@ class Signup extends Component {
           placeholderTextColor={'black'}
           underlineColorAndroid="transparent"
         />
-        <TouchableOpacity style={signupStyles.signupBtn}>
+        <TouchableOpacity
+          style={signupStyles.signupBtn}
+          onpress={this.signUp()}>
           <Text style={signupStyles.btnText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>

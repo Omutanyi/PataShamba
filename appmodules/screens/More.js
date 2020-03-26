@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -12,44 +13,46 @@ const {width: WIDTH} = Dimensions.get('window');
 export class More extends Component {
   render() {
     return (
-      <View style={moreStyles.primaryView}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('SellOpt')}
-          style={moreStyles.optBtn}>
-          <Text style={moreStyles.btnText}>OPT TO SELL</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={moreStyles.optBtn}
-          onPress={() => this.props.navigation.navigate('Saved')}>
-          <Text style={moreStyles.btnText}>SAVED LANDS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={moreStyles.optBtn}
-          onPress={() => this.props.navigation.navigate('PurchaseStatus')}>
-          <Text style={moreStyles.btnText}>PURCHASE STATUS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={moreStyles.optBtn}
-          onPress={() => this.props.navigation.navigate('ContactUs')}>
-          <Text style={moreStyles.btnText}>CONTACT US</Text>
-        </TouchableOpacity>
-        <Text style={moreStyles.titleText}>ACCOUNT OPTIONS</Text>
-        <TouchableOpacity
-          style={moreStyles.optBtn}
-          onPress={() => this.props.navigation.navigate('Profile')}>
-          <Text style={moreStyles.btnText}>PROFILE SETTINGS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={moreStyles.optBtn}
-          onPress={() => this.props.navigation.navigate('AppSettings')}>
-          <Text style={moreStyles.btnText}>APP SETTINGS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={moreStyles.optBtn}
-          onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={moreStyles.btnText}>LOG OUT</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView>
+        <View style={moreStyles.primaryView}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('SellOpt')}
+            style={moreStyles.optBtn}>
+            <Text style={moreStyles.btnText}>OPT TO SELL</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={moreStyles.optBtn}
+            onPress={() => this.props.navigation.navigate('Saved')}>
+            <Text style={moreStyles.btnText}>SAVED LANDS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={moreStyles.optBtn}
+            onPress={() => this.props.navigation.navigate('PurchaseStatus')}>
+            <Text style={moreStyles.btnText}>PURCHASE STATUS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={moreStyles.optBtn}
+            onPress={() => this.props.navigation.navigate('ContactUs')}>
+            <Text style={moreStyles.btnText}>CONTACT US</Text>
+          </TouchableOpacity>
+          <Text style={moreStyles.titleText}>ACCOUNT OPTIONS</Text>
+          <TouchableOpacity
+            style={moreStyles.optBtn}
+            onPress={() => this.props.navigation.navigate('Profile')}>
+            <Text style={moreStyles.btnText}>PROFILE SETTINGS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={moreStyles.optBtn}
+            onPress={() => this.props.navigation.navigate('AppSettings')}>
+            <Text style={moreStyles.btnText}>APP SETTINGS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={moreStyles.optBtn}
+            onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={moreStyles.btnText}>LOG OUT</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }
