@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 // import Howitworks from './appmodules/screens/howitworks.js';
 import login from '/home/javier/final_Project/PataShamba/appmodules/screens/login.js';
 import Signup from '/home/javier/final_Project/PataShamba/appmodules/screens/signup.js';
@@ -12,9 +12,9 @@ import Filter from '/home/javier/final_Project/PataShamba/appmodules/screens/Fil
 import More from '/home/javier/final_Project/PataShamba/appmodules/screens/More.js';
 
 // screens in the more tab
-import SellOpt from 'appmodules/screens/SellOpt.js';
-import Saved from 'appmodules/screens/Saved.js';
-import PurchaseStatus from 'appmodules/screens/PurchaseStatus.js';
+import SellOpt from '/home/javier/final_Project/PataShamba/appmodules/screens/SellOpt.js';
+import Saved from '/home/javier/final_Project/PataShamba/appmodules/screens/Saved.js';
+import PurchaseStatus from '/home/javier/final_Project/PataShamba/appmodules/screens/PurchaseStatus.js';
 
 //import {Profile} from '/home/javier/final_Project/PataShamba/appmodules/screens/Profile.js';
 //import {Settings} from '/home/javier/final_Project/PataShamba/appmodules/screens/Settings.js';
@@ -26,29 +26,34 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 //import {createDrawerNavigator} from '@react-navigation/drawer';
 //import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import Icon from 'react-native-vector-icons/AntDesign';
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const PataShambaTabs = createMaterialBottomTabNavigator();
 
 export default class App extends Component {
   createBottomTabs = () => {
+    const homeIcon = (
+      <Icon
+        style={[{color: '#388E3C', paddingBottom: 20}]}
+        size={24}
+        name={'home'}
+      />
+    );
     return (
       <PataShambaTabs.Navigator
         initialRouteName="Home"
         barStyle={{
-          backgroundColor: '#4CAF50',
-          activeTintColor: '#FFFF',
-          inactiveTintColor: '#FFC107',
+          backgroundColor: 'white',
+          activeTintColor: '#388E3C',
+          inactiveTintColor: '#388E3C',
+          padding: 0,
         }}>
         <PataShambaTabs.Screen
           name="Home"
           component={Home}
           options={{
-            tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={20} name={'home'} />
-            ),
+            tabBarIcon: () => homeIcon,
           }}
         />
         <PataShambaTabs.Screen
@@ -56,7 +61,7 @@ export default class App extends Component {
           component={Filter}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={20} name={'filter'} />
+              <Icon style={[{color: '#388E3C'}]} size={24} name={'find'} />
             ),
           }}
         />
@@ -65,7 +70,11 @@ export default class App extends Component {
           component={Chat}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={20} name={'message'} />
+              <Icon
+                style={[{color: '#388E3C', paddingBottom: 20}]}
+                size={24}
+                name={'message1'}
+              />
             ),
           }}
         />
@@ -74,7 +83,11 @@ export default class App extends Component {
           component={More}
           options={{
             tabBarIcon: () => (
-              <Icon style={[{color: '#ffedcc'}]} size={20} name={'more'} />
+              <Icon
+                style={[{color: '#388E3C', paddingBottom: 20}]}
+                size={24}
+                name={'setting'}
+              />
             ),
           }}
         />
@@ -143,6 +156,13 @@ export default class App extends Component {
               headerStyle: {
                 backgroundColor: '#388E3C',
               },
+              headerRight: () => (
+                <Icon
+                  style={[{color: 'white', right: 20}]}
+                  size={17}
+                  name={'profile'}
+                />
+              ),
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
@@ -150,12 +170,13 @@ export default class App extends Component {
             }}
           />
           <Stack.Screen
-            name="Sell your piece of land"
+            name="SellOpt"
             component={SellOpt}
             options={{
               headerStyle: {
                 backgroundColor: '#388E3C',
               },
+              headerTitle: () => <Text>Opt To Sell</Text>,
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
@@ -163,7 +184,7 @@ export default class App extends Component {
             }}
           />
           <Stack.Screen
-            name="Saved Ads"
+            name="Saved"
             component={Saved}
             options={{
               headerStyle: {
@@ -176,7 +197,7 @@ export default class App extends Component {
             }}
           />
           <Stack.Screen
-            name="Purchase Status"
+            name="PurchaseStatus"
             component={PurchaseStatus}
             options={{
               headerStyle: {

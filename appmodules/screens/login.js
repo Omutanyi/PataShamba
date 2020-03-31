@@ -49,7 +49,7 @@ class login extends Component {
           <View>
             <TextInput
               style={loginStyle.input}
-              placeholder={'Enter your username address'}
+              placeholder={'Enter your username'}
               value={this.state.username}
               onChangeText={username => this.setState({username})}
               placeholderTextColor={'black'}

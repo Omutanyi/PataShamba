@@ -18,7 +18,7 @@ class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spinner: false,
+      // spinner: false,
       images: [
         'https://images.unsplash.com/photo-1554129351-dd3625ed5f30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
         'https://images.unsplash.com/photo-1562939568-91cdb83881ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
@@ -29,13 +29,13 @@ class WelcomeScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        spinner: !this.state.spinner,
-      });
-    }, 3000);
-  }
+  // componentDidMount() {
+  //   setInterval(() => {
+  //     this.setState({
+  //       spinner: !this.state.spinner,
+  //     });
+  //   }, 3000);
+  // }
   render() {
     return (
       <View style={welcome.primaryView}>
@@ -81,11 +81,11 @@ class WelcomeScreen extends Component {
           style={welcome.loginBtn}
           onPress={() => this.props.navigation.navigate('Login')}>
           <Text style={welcome.btnText}>LOGIN</Text>
-          <Spinner
+          {/* <Spinner
             visible={this.state.spinner}
             textContent={'Loading...'}
             textStyle={welcome.spinnerTextStyle}
-          />
+          /> */}
         </TouchableOpacity>
         <TouchableOpacity
           style={welcome.signupBtn}

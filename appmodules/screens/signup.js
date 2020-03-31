@@ -93,7 +93,7 @@ class Signup extends Component {
         />
         <TouchableOpacity
           style={signupStyles.signupBtn}
-          onpress={this.signUp()}>
+          onpress={this.signUp}>
           <Text style={signupStyles.btnText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>

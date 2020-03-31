@@ -1,6 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
-
 import com.android.build.OutputFile
 
 /**
@@ -180,16 +178,19 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-firebase')
+    // implementation project(':react-native-firebase')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(project(':react-native-maps')){
        exclude group: 'com.google.android.gms', module: 'play-services-base'
        exclude group: 'com.google.android.gms', module: 'play-services-maps'
    }
-   implementation 'com.google.android.gms:play-services-base:10.0.1'
-   implementation 'com.google.android.gms:play-services-maps:10.0.1'
-   implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation "com.google.android.gms:play-services-base:+"
+    implementation 'com.google.android.gms:play-services-location:+'
+    implementation 'com.google.android.gms:play-services-maps:+'
+//    implementation 'com.google.android.gms:play-services-base:10.0.1'
+//    implementation 'com.google.android.gms:play-services-maps:10.0.1'
+//    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 //    implementation "com.google.android.gms:play-services-base:16.1.0"
 //   implementation "com.google.firebase:firebase-core:16.0.9"
 //   implementation "com.google.firebase:firebase-crash:11.8.0" // firabase cloud crash dependancy
@@ -214,4 +215,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-apply plugin: 'com.google.gms.google-services'
