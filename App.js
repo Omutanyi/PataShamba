@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Image, Text} from 'react-native';
 // import Howitworks from './appmodules/screens/howitworks.js';
 import login from '/home/javier/final_Project/PataShamba/appmodules/screens/login.js';
 import Signup from '/home/javier/final_Project/PataShamba/appmodules/screens/signup.js';
@@ -156,13 +156,15 @@ export default class App extends Component {
               headerStyle: {
                 backgroundColor: '#388E3C',
               },
-              headerRight: () => (
-                <Icon
-                  style={[{color: 'white', right: 20}]}
-                  size={17}
-                  name={'profile'}
-                />
-              ),
+              // headerRight: () => (
+              //   <Image
+              //     source={{
+              //       uri:
+              //         'https://images.unsplash.com/photo-1494187570835-b188e7f0f26e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+              //     }}
+              //     style={{width: 30, height: 30, left: 30, borderRadius: 50}}
+              //   />
+              // ),
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
