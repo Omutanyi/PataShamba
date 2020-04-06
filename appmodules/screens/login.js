@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -55,6 +55,7 @@ class login extends Component {
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
+              leftIcon={<Icon name="user" size={24} color="black" />}
             />
           </View>
           <View>
@@ -67,6 +68,7 @@ class login extends Component {
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
               Required
+              leftIcon={<Icon name="lock" size={24} color="black" />}
             />
           </View>
           <TouchableOpacity

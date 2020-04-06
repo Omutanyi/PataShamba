@@ -26,6 +26,7 @@ class Signup extends Component {
   signUp() {
     const {email, password, phone, username, passwordConfirm} = this.status;
     if (password && email && phone && username && passwordConfirm != null) {
+      // eslint-disable-next-line eqeqeq
       if (password == passwordConfirm) {
               this.props.navigation.navigate('Pata Shamba');
       } else {

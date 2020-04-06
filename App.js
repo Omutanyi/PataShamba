@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, Image, Text} from 'react-native';
+import {StyleSheet, StatusBar, Text} from 'react-native';
 // import Howitworks from './appmodules/screens/howitworks.js';
 import login from '/home/javier/final_Project/PataShamba/appmodules/screens/login.js';
 import Signup from '/home/javier/final_Project/PataShamba/appmodules/screens/signup.js';
@@ -15,6 +15,8 @@ import More from '/home/javier/final_Project/PataShamba/appmodules/screens/More.
 import SellOpt from '/home/javier/final_Project/PataShamba/appmodules/screens/SellOpt.js';
 import Saved from '/home/javier/final_Project/PataShamba/appmodules/screens/Saved.js';
 import PurchaseStatus from '/home/javier/final_Project/PataShamba/appmodules/screens/PurchaseStatus.js';
+import Profile from '/home/javier/final_Project/PataShamba/appmodules/screens/Profile.js';
+import ContactUs from '/home/javier/final_Project/PataShamba/appmodules/screens/ContactUs.js';
 
 //import {Profile} from '/home/javier/final_Project/PataShamba/appmodules/screens/Profile.js';
 //import {Settings} from '/home/javier/final_Project/PataShamba/appmodules/screens/Settings.js';
@@ -86,7 +88,7 @@ export default class App extends Component {
               <Icon
                 style={[{color: '#388E3C', paddingBottom: 20}]}
                 size={24}
-                name={'setting'}
+                name={'bars'}
               />
             ),
           }}
@@ -109,6 +111,7 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
+        <StatusBar backgroundColor="#388E3C" barStyle="light-content" />
         <Stack.Navigator>
           <Stack.Screen
             name="Welcome"
@@ -201,6 +204,32 @@ export default class App extends Component {
           <Stack.Screen
             name="PurchaseStatus"
             component={PurchaseStatus}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="ContactUs"
+            component={ContactUs}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
             options={{
               headerStyle: {
                 backgroundColor: '#388E3C',
