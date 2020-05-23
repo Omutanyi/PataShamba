@@ -12,39 +12,68 @@ import {
 } from 'react-native';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
+// firebase authentication import
+import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
+
 const {width: WIDTH} = Dimensions.get('window');
 
 class Signup extends Component {
-  state = {
-    email: '',
-    password: '',
-    phone: '',
-    username: '',
-    passwordConfirm: '',
-  };
-
-  signUp() {
-    const {email, password, phone, username, passwordConfirm} = this.status;
-    if (password && email && phone && username && passwordConfirm != null) {
-      // eslint-disable-next-line eqeqeq
-      if (password == passwordConfirm) {
-              this.props.navigation.navigate('Pata Shamba');
-      } else {
-       Alert.alert('Error', 'Please make sure your passwords match', [
-        {
-          Text: 'Okay',
-        },
-      ]); 
-      }
-    } else {
-      // console.warn('permission denied')
-      Alert.alert('Error', 'Please make sure to fill all the fields as indicated to proceed', [
-        {
-          Text: 'Okay',
-        },
-      ]);
-    }
+    constructor(props) {
+    super(props);
+    this.unsubscriber = null;
+    this.state = {
+      isAuthenticated: false,
+      username: '',
+      phone: '',
+      email: '',
+      password: '',
+      user: null,
+    };
   }
+
+
+   signUp = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        this.state.email,
+        this.state.password,
+      )
+      .then(() => {
+        Alert.alert(
+          'Successfull',
+          'Your account has been created successfully',
+          [
+            {
+              Text: 'Okay',
+              onPress: this.props.navigation.navigate('Queue'),
+            },
+          ],
+        );
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          Alert.alert(
+            'Failed',
+            'The email address provided is already in use',
+            [
+              {
+                Text: 'Okay',
+              },
+            ],
+          );
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          Alert.alert('Failed', 'The email address provided is invalid', [
+            {
+              Text: 'Okay',
+            },
+          ]);
+        }
+      });
+  };
 
   render() {
     return (
@@ -58,7 +87,9 @@ class Signup extends Component {
           placeholder={'Username'}
           value={this.state.username}
           placeholderTextColor={'black'}
-          onChangeText={username => this.setState({username})}
+          onChangeText={(text) => {
+              this.setState({username: text});
+            }}
           underlineColorAndroid="transparent"
         />
         <TextInput
@@ -66,7 +97,9 @@ class Signup extends Component {
           placeholder={'Email'}
           value={this.state.email}
           placeholderTextColor={'black'}
-          onChangeText={email => this.setState({email})}
+          onChangeText={(text) => {
+              this.setState({email: text});
+            }}
           underlineColorAndroid="transparent"
         />
         <TextInput
@@ -74,7 +107,9 @@ class Signup extends Component {
           placeholder={'Phone'}
           value={this.state.phone}
           placeholderTextColor={'black'}
-          onChangeText={phone => this.setState({phone})}
+          onChangeText={(number) => {
+              this.setState({phone: number});
+            }}
           underlineColorAndroid="transparent"
         />
         <TextInput
@@ -82,19 +117,21 @@ class Signup extends Component {
           placeholder={'Password'}
           value={this.state.password}
           placeholderTextColor={'black'}
-          onChangeText={password => this.setState({password})}
+          onChangeText={(text) => {
+              this.setState({password: text});
+            }}
           underlineColorAndroid="transparent"
         />
-        <TextInput
+        {/* <TextInput
           style={signupStyles.input}
           placeholder={'Confirm Password'}
           value={this.state.passwordConfirm}
           placeholderTextColor={'black'}
           underlineColorAndroid="transparent"
-        />
+        /> */}
         <TouchableOpacity
           style={signupStyles.signupBtn}
-          onpress={this.signUp}>
+          onpress={this.signUp()}>
           <Text style={signupStyles.btnText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>

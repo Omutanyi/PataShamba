@@ -8,38 +8,81 @@ import {
   Dimensions,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
+
+// firebase authentication import
+import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
+import fire from '/home/javier/final_Project/PataShamba/src/config.js';
 
 const {width: WIDTH} = Dimensions.get('window');
 const d = Dimensions.get('window');
 
 class login extends Component {
-  state = {
-    username: '',
-    password: '',
-  };
-
-  signup = () => {
-    this.props.navigation.navigate('Signup');
-  };
-
-  checkLogin() {
-    const {username, password} = this.state;
-    // console.warn(username, password);
-    if (username == 'Admin' && password == 'Admin') {
-      this.props.navigation.navigate('Pata Shamba');
-    } else {
-      // console.warn('Permission denied');
-      Alert.alert('Error', 'username/password mismatch', [
-        {
-          Text: 'Okay',
-        },
-      ]);
-    }
+  constructor(props) {
+    super(props);
+    this.unsubscriber = null;
+    this.state = {
+      isAuthenticated: false,
+      isLoading: false,
+      typedEmail: '',
+      password: '',
+      username: '',
+      user: null,
+    };
   }
+
+  // login() {
+  //   const {username, password} = this.state;
+  //   // console.warn(username, password);
+  //   if (username == 'Admin' && password == 'Admin') {
+  //     this.props.navigation.navigate('Pata Shamba');
+  //   } else {
+  //     // console.warn('Permission denied');
+  //     Alert.alert('Error', 'username/password mismatch', [
+  //       {
+  //         Text: 'Okay',
+  //       },
+  //     ]);
+  //   }
+  // }
+
+  login = () => {
+    if (this.state.typedEmail === '' && this.state.password === '') {
+      Alert.alert('Enter details to signin!');
+      console.log('Home page should load');
+    } else {
+      this.setState({
+        isLoading: true,
+      });
+      fire
+        .auth()
+        .signInWithEmailAndPassword(this.state.typedEmail, this.state.password)
+        .then(res => {
+          console.log(res);
+          console.log('User logged-in successfully!');
+          this.setState({
+            isLoading: false,
+            typedEmail: '',
+            password: '',
+          });
+          this.props.navigation.navigate('Pata Shamba');
+        })
+        .catch(error => this.setState({errorMessage: error.message}));
+    }
+  };
+
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={loginStyle.preloader}>
+          <ActivityIndicator size="large" color="#FFC107" />
+        </View>
+      );
+    }
     return (
       <View style={loginStyle.primaryView}>
         <View style={loginStyle.loginView}>
@@ -49,9 +92,9 @@ class login extends Component {
           <View>
             <TextInput
               style={loginStyle.input}
-              placeholder={'Enter your username'}
-              value={this.state.username}
-              onChangeText={username => this.setState({username})}
+              placeholder={'Enter your email'}
+              value={this.state.typedEmail}
+              onChangeText={text => this.setState({typedEmail: text})}
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
@@ -63,7 +106,7 @@ class login extends Component {
               style={loginStyle.input}
               value={this.state.password}
               placeholder={'Password'}
-              onChangeText={password => this.setState({password})}
+              onChangeText={text => this.setState({password: text})}
               secureTextEntry={true}
               placeholderTextColor={'black'}
               underlineColorAndroid="transparent"
@@ -73,7 +116,7 @@ class login extends Component {
           </View>
           <TouchableOpacity
             style={loginStyle.loginBtn}
-            onPress={() => this.checkLogin()}>
+            onPress={() => this.login()}>
             <Text style={loginStyle.btnText}>LOGIN</Text>
           </TouchableOpacity>
         </View>
@@ -137,6 +180,16 @@ const loginStyle = StyleSheet.create({
     right: 10,
     fontFamily: 'notoserif',
     color: '#FFFFFF',
+  },
+  preloader: {
+    borderRadius: 50,
+    top: '40%',
+    padding: 20,
+    alignSelf: 'center',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#388E3C',
   },
 });
 

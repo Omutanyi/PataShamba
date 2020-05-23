@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {StyleSheet, StatusBar, Text} from 'react-native';
+import {StyleSheet, StatusBar, Image, Text} from 'react-native';
 // import Howitworks from './appmodules/screens/howitworks.js';
 import login from '/home/javier/final_Project/PataShamba/appmodules/screens/login.js';
 import Signup from '/home/javier/final_Project/PataShamba/appmodules/screens/signup.js';
@@ -28,7 +28,11 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 //import {createDrawerNavigator} from '@react-navigation/drawer';
 //import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
+//firebase
+import db from '/home/javier/final_Project/PataShamba/src/config.js';
+
 import Icon from 'react-native-vector-icons/AntDesign';
+
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const PataShambaTabs = createMaterialBottomTabNavigator();
@@ -159,15 +163,26 @@ export default class App extends Component {
               headerStyle: {
                 backgroundColor: '#388E3C',
               },
-              // headerRight: () => (
-              //   <Image
-              //     source={{
-              //       uri:
-              //         'https://images.unsplash.com/photo-1494187570835-b188e7f0f26e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-              //     }}
-              //     style={{width: 30, height: 30, left: 30, borderRadius: 50}}
-              //   />
-              // ),
+              headerLeft: () => (
+                <Image
+                  source={{
+                    uri:
+                      'https://logopond.com/logos/c7e0af2452441e2ca3288316592d6399.png',
+                  }}
+                  style={[
+                    {width: 35, height: 35, borderRadius: 50, margin: 25},
+                  ]}
+                />
+              ),
+              headerRight: () => (
+                <Icon
+                  // eslint-disable-next-line react-native/no-inline-styles
+                  style={[{color: 'white', margin: 25}]}
+                  size={20}
+                  name={'user'}
+                />
+              ),
+              headerTitleAlign: 'center',
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',

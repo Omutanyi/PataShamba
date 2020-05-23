@@ -249,6 +249,7 @@ export class Home extends Component {
 ]
 
   render() {
+    console.log('Home page does load');
     return (
       <View style={styles.container}>
      <MapView
@@ -270,8 +271,8 @@ export class Home extends Component {
 const styles = StyleSheet.create({
   container: {
    ...StyleSheet.absoluteFillObject,
-   height: 600,
-   width: 400,
+   height: "100%",
+   width: "100%",
    justifyContent: 'flex-end',
    alignItems: 'center',
  },
