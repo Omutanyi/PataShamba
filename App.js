@@ -2,6 +2,7 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StyleSheet, StatusBar, Image, Text} from 'react-native';
+import Dialog, {SlideAnimation, DialogContent} from 'react-native-popup-dialog';
 // import Howitworks from './appmodules/screens/howitworks.js';
 import login from '/home/javier/final_Project/PataShamba/appmodules/screens/login.js';
 import Signup from '/home/javier/final_Project/PataShamba/appmodules/screens/signup.js';
@@ -29,15 +30,23 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 //import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 //firebase
-import db from '/home/javier/final_Project/PataShamba/src/config.js';
+import fire from '/home/javier/final_Project/PataShamba/src/config.js';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const PataShambaTabs = createMaterialBottomTabNavigator();
+console.disableYellowBox = true;
 
 export default class App extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     visible: false,
+  //   };
+  // }
+
   createBottomTabs = () => {
     const homeIcon = (
       <Icon
@@ -46,6 +55,7 @@ export default class App extends Component {
         name={'home'}
       />
     );
+
     return (
       <PataShambaTabs.Navigator
         initialRouteName="Home"
@@ -179,9 +189,35 @@ export default class App extends Component {
                   // eslint-disable-next-line react-native/no-inline-styles
                   style={[{color: 'white', margin: 25}]}
                   size={20}
-                  name={'user'}
+                  name={'shoppingcart'}
+                  // onPress={() => {
+                  //   console.log('logout pressed');
+                  //   fire
+                  //     .auth()
+                  //     .signOut()
+                  //     .then(
+                  //       () => this.props.navigation.navigate('Welcome'),
+                  //       console.log('User signed out!'),
+                  //     );
+                  // }}
                 />
               ),
+              // (
+              //   <Dialog
+              //     visible={this.state.visible}
+              //     onTouchOutside={() => {
+              //       this.setState({visible: false});
+              //     }}
+              //     dialogAnimation={
+              //       new SlideAnimation({
+              //         slideFrom: 'top',
+              //       })
+              //     }>
+              //     <DialogContent>
+              //       <Text>This is the dialog</Text>
+              //     </DialogContent>
+              //   </Dialog>,
+              // ),
               headerTitleAlign: 'center',
               headerTintColor: '#fff',
               headerTitleStyle: {

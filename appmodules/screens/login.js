@@ -189,7 +189,7 @@ const loginStyle = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#388E3C',
+    backgroundColor: '#C8E6C9',
   },
 });
 

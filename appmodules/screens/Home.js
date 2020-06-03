@@ -3,8 +3,16 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {Marker} from 'react-native-maps';
+import firestore from '@react-native-firebase/firestore';
+import fire from '/home/javier/final_Project/PataShamba/src/config.js';
 
-export class Home extends Component {
+class Home extends Component {
+   constructor(props) {
+    super(props);
+    this.state = {
+      markers: [],
+    };
+  }
   mapStyle = [
   {
     'elementType': 'geometry',
@@ -248,21 +256,37 @@ export class Home extends Component {
   },
 ]
 
+getData(){
+  (async () => {
+  console.log('getData loads');
+      const markersData = await firestore().collection('Lands').doc('GeoLocation').get();
+      console.log(markersData);
+      this.setState({
+        markers: markersData,
+      });
+})();
+  }
+
+  componentDidMount(){
+    this.getData();
+    console.log('home did mount');
+  }
+
   render() {
-    console.log('Home page does load');
     return (
       <View style={styles.container}>
      <MapView
-       provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+       provider={PROVIDER_GOOGLE}
        style={styles.map}
        customMapStyle={this.mapStyle}
-       region={{
-         latitude: 37.78825,
-         longitude: -122.4324,
-         latitudeDelta: 0.015,
-         longitudeDelta: 0.0121,
-       }}
-      />
+      >
+      {this.state.markers.map(marker => (
+    <MapView.Marker
+      coordinate={marker.coordinates}
+      title={marker.title}
+    />
+  ))}
+  </MapView>
    </View>
     );
   }
@@ -271,8 +295,8 @@ export class Home extends Component {
 const styles = StyleSheet.create({
   container: {
    ...StyleSheet.absoluteFillObject,
-   height: "100%",
-   width: "100%",
+   height: '100%',
+   width: '100%',
    justifyContent: 'flex-end',
    alignItems: 'center',
  },

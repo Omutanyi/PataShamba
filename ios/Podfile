@@ -40,6 +40,8 @@ target 'PataShamba' do
 
   pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
 
+  pod 'RNFBFirestore', :path => '../node_modules/@react-native-firebase/firestore'
+
   target 'PataShambaTests' do
     inherit! :search_paths
     # Pods for testing
