@@ -5,6 +5,7 @@ import {
   Dimensions,
   StyleSheet,
   Text,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
@@ -39,6 +40,21 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <View style={welcome.primaryView}>
+        <Image
+          source={{
+            uri:
+              'https://logopond.com/logos/c7e0af2452441e2ca3288316592d6399.png',
+          }}
+          style={[
+            {
+              width: 35,
+              height: 35,
+              borderRadius: 50,
+              alignSelf: 'center',
+              bottom: 10,
+            },
+          ]}
+        />
         <Text style={welcome.titleText}>PATA SHAMBA</Text>
         <Text style={welcome.primaryText}>
           The solution to all your land aspirations

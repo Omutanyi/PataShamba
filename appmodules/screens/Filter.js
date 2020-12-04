@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {
   Text,
-  Image,
+  TouchableNativeFeedback,
   StyleSheet,
   Dimensions,
   TextInput,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
 import Icon from 'react-native-vector-icons/AntDesign';
+import firestore from '@react-native-firebase/firestore';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -19,7 +20,8 @@ class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // spinner: false,
+      data: [],
+      details: [],
       images: [
         'https://images.unsplash.com/photo-1554129351-dd3625ed5f30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
         'https://images.unsplash.com/photo-1562939568-91cdb83881ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
@@ -29,12 +31,82 @@ class Filter extends Component {
       ],
     };
   }
+
+  // async componentDidMount() {
+  //   const datax = {
+  //     Description: 'RESIDENTIAL LAND for sale in Marula Lane,',
+  //     Location: 'Karen',
+  //     Owner: 'James Kamau',
+  //     Price: 450000,
+  //     Size: '1/8 acres',
+  //   };
+  //   await firestore()
+  //     .collection('Lands')
+  //     .doc()
+  //     .set(datax);
+  //   console.log('save data called');
+  // }
+
+  showDetails = key => event => {
+    var detailsArray = this.state.details.slice();
+    console.log(key);
+    // console.log(this.state.data[key]);
+    var landDetails = this.state.data[key];
+    detailsArray.push(landDetails);
+    this.setState({
+      details: detailsArray,
+    });
+    // console.log(detailsArray);
+    this.showArray();
+  };
+
+  showArray = () => {
+    console.log(this.state.details);
+  };
+
+  async componentDidMount() {
+    const landsRef = firestore().collection('Lands');
+    const snapshot = await landsRef.get();
+    var newDataArray = this.state.data.slice();
+    snapshot.forEach(doc => {
+      // console.log(doc.id, '=>', doc.data());
+      newDataArray.push(doc.data());
+      this.setState({data: newDataArray});
+      console.log(newDataArray);
+    });
+
+    // let landDetails = await firestore().collection('Lands');
+
+    // let getDoc = landsRef
+    //   .get()
+    //   .then(doc => {
+    //     if (!doc.exists) {
+    //       console.log('No such document!');
+    //     } else {
+    //       console.log('LandDetails data:', doc.data());
+    //       var newDataArray = this.state.data.slice();
+    //       newDataArray.push(doc.data());
+    //       this.setState({data: newDataArray});
+    //       console.log(this.state.data);
+    //       if (newDataArray.length <= 1) {
+    //         console.log('array is short');
+    //         this.savedata();
+    //       } else {
+    //         console.log('array is long');
+    //       }
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log('Error getting document', err);
+    //   });
+  }
+
   render() {
     return (
       <ScrollView style={filterStyles.primaryView}>
         <View style={filterStyles.searchView}>
           <TextInput
-            placeholder="Search availlable lands"
+            placeholder="Search available lands"
             style={filterStyles.searchInput}
           />
           <TouchableOpacity style={filterStyles.searchBtn}>
@@ -42,298 +114,83 @@ class Filter extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={filterStyles.cardContainer}>
-          {/* <Image
-            style={filterStyles.cardImage}
-            source={{
-              uri:
-                'https://images.unsplash.com/photo-1523704323981-90633778233a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-            }}
-          /> */}
-          <View>
-            <Text style={filterStyles.locationText}>Kitengela</Text>
-            <Text style={filterStyles.descriptionText}>Johnnie Walker</Text>
-            <Text style={filterStyles.descriptionText}>1/4 acres</Text>
-            <Text style={filterStyles.priceText}>Kshs. 800,000</Text>
-            <Text style={filterStyles.detailsText}>
-              This is a brief description of the property. This stylish
-              residence is nestled on a large level block in a desirably
-              tranquil cul-de-sac location. The house comes complete with two
-              living rooms, a welcoming kitchen/dining area, two bathrooms,
-              three bedrooms, a study and a laundry, and retains the value of
-              peaceful living while being conveniently close to shops, school
-              and transport.
-            </Text>
-            <SliderBox
-              images={this.state.images}
-              sliderBoxHeight={200}
-              // onCurrentImagePressed={index =>
-              //   console.warn(`image ${index} pressed`)
-              // }
-              dotColor="#FFC107"
-              inactiveDotColor="#90A4AE"
-              paginationBoxVerticalPadding={20}
-              // autoplay
-              circleLoop
-              resizeMethod={'resize'}
-              resizeMode={'cover'}
-              paginationBoxStyle={{
-                position: 'absolute',
-                bottom: 0,
-                padding: 0,
-                alignItems: 'center',
-                alignSelf: 'center',
-                justifyContent: 'center',
-                paddingVertical: 10,
-              }}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 7,
-                marginHorizontal: 0,
-                padding: 0,
-                margin: 0,
-                backgroundColor: 'rgba(128, 128, 128, 0.92)',
-              }}
-              ImageComponentStyle={{
-                borderRadius: 10,
-                width: '80%',
-                marginTop: 25,
-              }}
-              imageLoadingColor="#FFC107"
-            />
-            {/* <TouchableOpacity
+        {this.state.data.map((data, index) => (
+          <View style={filterStyles.cardContainer} key={index}>
+            <View>
+              <Text style={filterStyles.locationText}>{data.Location}</Text>
+              <Text style={filterStyles.descriptionText}>{data.Owner}</Text>
+              <Text style={filterStyles.descriptionText}>{data.Size}</Text>
+              <Text style={filterStyles.priceText}>Kshs. {data.Price}</Text>
+              <Text style={filterStyles.detailsText}>{data.Description}</Text>
+              {/* <SliderBox
+                images={this.state.images}
+                sliderBoxHeight={200}
+                // onCurrentImagePressed={index =>
+                //   console.warn(`image ${index} pressed`)
+                // }
+                dotColor="#FFC107"
+                inactiveDotColor="#90A4AE"
+                paginationBoxVerticalPadding={20}
+                // autoplay
+                circleLoop
+                resizeMethod={'resize'}
+                resizeMode={'cover'}
+                paginationBoxStyle={{
+                  position: 'absolute',
+                  bottom: 0,
+                  padding: 0,
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  paddingVertical: 10,
+                }}
+                dotStyle={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 7,
+                  marginHorizontal: 0,
+                  padding: 0,
+                  margin: 0,
+                  backgroundColor: 'rgba(128, 128, 128, 0.92)',
+                }}
+                ImageComponentStyle={{
+                  borderRadius: 10,
+                  width: '80%',
+                  marginTop: 25,
+                }}
+                imageLoadingColor="#FFC107"
+              /> */}
+              {/* <TouchableOpacity
               style={filterStyles.detailsBtn}
               onPress={() => this.continue}>
               <Text style={filterStyles.detailsBtnTxt}>Details</Text>
             </TouchableOpacity> */}
-            <View style={filterStyles.iconContainer}>
-              <Icon style={filterStyles.cardIcon} size={20} name={'message1'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'hearto'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'sharealt'} />
+              <View style={filterStyles.iconContainer}>
+                {/* <Icon
+                  style={filterStyles.cardIcon}
+                  size={20}
+                  name={'message1'}
+                /> */}
+                <Icon style={filterStyles.cardIcon} size={20} name={'hearto'} />
+                <Text style={{color: 'red', left: 10}}>{data.Likes}</Text>
+                <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
+                <Text style={{color: 'grey', left: 10}}>Save</Text>
+                <Icon
+                  style={filterStyles.cardIcon}
+                  size={20}
+                  name={'bars'}
+                  onPress={this.showDetails(index)}
+                />
+                <Text style={{color: 'grey', left: 10}}>Details</Text>
+                {/* <Icon
+                  style={filterStyles.cardIcon}
+                  size={20}
+                  name={'sharealt'}
+                /> */}
+              </View>
             </View>
           </View>
-        </View>
-        <View style={filterStyles.cardContainer}>
-          {/* <Image
-            style={filterStyles.cardImage}
-            source={{
-              uri:
-                'https://images.unsplash.com/photo-1523704323981-90633778233a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-            }}
-          /> */}
-          <View>
-            <Text style={filterStyles.locationText}>Kitengela</Text>
-            <Text style={filterStyles.descriptionText}>Johnnie Walker</Text>
-            <Text style={filterStyles.descriptionText}>1/4 acres</Text>
-            <Text style={filterStyles.priceText}>Kshs. 800,000</Text>
-            <Text style={filterStyles.detailsText}>
-              This is a brief description of the property. This stylish
-              residence is nestled on a large level block in a desirably
-              tranquil cul-de-sac location. The house comes complete with two
-              living rooms, a welcoming kitchen/dining area, two bathrooms,
-              three bedrooms, a study and a laundry, and retains the value of
-              peaceful living while being conveniently close to shops, school
-              and transport.
-            </Text>
-            <SliderBox
-              images={this.state.images}
-              sliderBoxHeight={200}
-              // onCurrentImagePressed={index =>
-              //   console.warn(`image ${index} pressed`)
-              // }
-              dotColor="#FFC107"
-              inactiveDotColor="#90A4AE"
-              paginationBoxVerticalPadding={20}
-              // autoplay
-              circleLoop
-              resizeMethod={'resize'}
-              resizeMode={'cover'}
-              paginationBoxStyle={{
-                position: 'absolute',
-                bottom: 0,
-                padding: 0,
-                alignItems: 'center',
-                alignSelf: 'center',
-                justifyContent: 'center',
-                paddingVertical: 10,
-              }}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 7,
-                marginHorizontal: 0,
-                padding: 0,
-                margin: 0,
-                backgroundColor: 'rgba(128, 128, 128, 0.92)',
-              }}
-              ImageComponentStyle={{
-                borderRadius: 10,
-                width: '80%',
-                marginTop: 25,
-              }}
-              imageLoadingColor="#FFC107"
-            />
-            {/* <TouchableOpacity
-              style={filterStyles.detailsBtn}
-              onPress={() => this.continue}>
-              <Text style={filterStyles.detailsBtnTxt}>Details</Text>
-            </TouchableOpacity> */}
-            <View style={filterStyles.iconContainer}>
-              <Icon style={filterStyles.cardIcon} size={20} name={'message1'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'hearto'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'sharealt'} />
-            </View>
-          </View>
-        </View>
-        <View style={filterStyles.cardContainer}>
-          {/* <Image
-            style={filterStyles.cardImage}
-            source={{
-              uri:
-                'https://images.unsplash.com/photo-1523704323981-90633778233a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-            }}
-          /> */}
-          <View>
-            <Text style={filterStyles.locationText}>Kitengela</Text>
-            <Text style={filterStyles.descriptionText}>Johnnie Walker</Text>
-            <Text style={filterStyles.descriptionText}>1/4 acres</Text>
-            <Text style={filterStyles.priceText}>Kshs. 800,000</Text>
-            <Text style={filterStyles.detailsText}>
-              This is a brief description of the property. This stylish
-              residence is nestled on a large level block in a desirably
-              tranquil cul-de-sac location. The house comes complete with two
-              living rooms, a welcoming kitchen/dining area, two bathrooms,
-              three bedrooms, a study and a laundry, and retains the value of
-              peaceful living while being conveniently close to shops, school
-              and transport.
-            </Text>
-            <SliderBox
-              images={this.state.images}
-              sliderBoxHeight={200}
-              // onCurrentImagePressed={index =>
-              //   console.warn(`image ${index} pressed`)
-              // }
-              dotColor="#FFC107"
-              inactiveDotColor="#90A4AE"
-              paginationBoxVerticalPadding={20}
-              // autoplay
-              circleLoop
-              resizeMethod={'resize'}
-              resizeMode={'cover'}
-              paginationBoxStyle={{
-                position: 'absolute',
-                bottom: 0,
-                padding: 0,
-                alignItems: 'center',
-                alignSelf: 'center',
-                justifyContent: 'center',
-                paddingVertical: 10,
-              }}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 7,
-                marginHorizontal: 0,
-                padding: 0,
-                margin: 0,
-                backgroundColor: 'rgba(128, 128, 128, 0.92)',
-              }}
-              ImageComponentStyle={{
-                borderRadius: 10,
-                width: '80%',
-                marginTop: 25,
-              }}
-              imageLoadingColor="#FFC107"
-            />
-            {/* <TouchableOpacity
-              style={filterStyles.detailsBtn}
-              onPress={() => this.continue}>
-              <Text style={filterStyles.detailsBtnTxt}>Details</Text>
-            </TouchableOpacity> */}
-            <View style={filterStyles.iconContainer}>
-              <Icon style={filterStyles.cardIcon} size={20} name={'message1'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'hearto'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'sharealt'} />
-            </View>
-          </View>
-        </View>
-        <View style={filterStyles.cardContainer}>
-          {/* <Image
-            style={filterStyles.cardImage}
-            source={{
-              uri:
-                'https://images.unsplash.com/photo-1523704323981-90633778233a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-            }}
-          /> */}
-          <View>
-            <Text style={filterStyles.locationText}>Kitengela</Text>
-            <Text style={filterStyles.descriptionText}>Johnnie Walker</Text>
-            <Text style={filterStyles.descriptionText}>1/4 acres</Text>
-            <Text style={filterStyles.priceText}>Kshs. 800,000</Text>
-            <Text style={filterStyles.detailsText}>
-              This is a brief description of the property. This stylish
-              residence is nestled on a large level block in a desirably
-              tranquil cul-de-sac location. The house comes complete with two
-              living rooms, a welcoming kitchen/dining area, two bathrooms,
-              three bedrooms, a study and a laundry, and retains the value of
-              peaceful living while being conveniently close to shops, school
-              and transport.
-            </Text>
-            <SliderBox
-              images={this.state.images}
-              sliderBoxHeight={200}
-              // onCurrentImagePressed={index =>
-              //   console.warn(`image ${index} pressed`)
-              // }
-              dotColor="#FFC107"
-              inactiveDotColor="#90A4AE"
-              paginationBoxVerticalPadding={20}
-              // autoplay
-              circleLoop
-              resizeMethod={'resize'}
-              resizeMode={'cover'}
-              paginationBoxStyle={{
-                position: 'absolute',
-                bottom: 0,
-                padding: 0,
-                alignItems: 'center',
-                alignSelf: 'center',
-                justifyContent: 'center',
-                paddingVertical: 10,
-              }}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 7,
-                marginHorizontal: 0,
-                padding: 0,
-                margin: 0,
-                backgroundColor: 'rgba(128, 128, 128, 0.92)',
-              }}
-              ImageComponentStyle={{
-                borderRadius: 10,
-                width: '80%',
-                marginTop: 25,
-              }}
-              imageLoadingColor="#FFC107"
-            />
-            {/* <TouchableOpacity
-              style={filterStyles.detailsBtn}
-              onPress={() => this.continue}>
-              <Text style={filterStyles.detailsBtnTxt}>Details</Text>
-            </TouchableOpacity> */}
-            <View style={filterStyles.iconContainer}>
-              <Icon style={filterStyles.cardIcon} size={20} name={'message1'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'heart'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
-              <Icon style={filterStyles.cardIcon} size={20} name={'sharealt'} />
-            </View>
-          </View>
-        </View>
+        ))}
       </ScrollView>
     );
   }
@@ -394,13 +251,13 @@ const filterStyles = StyleSheet.create({
     // width: WIDTH - 10,
     paddingLeft: 30,
     top: 5,
-    left: 35,
+    left: 25,
     bottom: 5,
     height: 30,
   },
   cardIcon: {
     color: 'black',
-    marginRight: 50,
+    marginLeft: 30,
   },
   cardImage: {
     width: 90,
@@ -435,17 +292,6 @@ const filterStyles = StyleSheet.create({
     color: '#388E3C',
     marginLeft: 20,
   },
-  // detailsBtn: {
-  //   left: 130,
-  //   bottom: 20,
-  //   backgroundColor: 'black',
-  // },
-  // detailsBtnTxt: {
-  //   fontWeight: '300',
-  //   fontSize: 15,
-  //   fontFamily: 'notoserif',
-  //   color: '#388E3C',
-  // },
 });
 
 export default Filter;

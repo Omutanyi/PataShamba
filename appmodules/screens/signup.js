@@ -13,8 +13,9 @@ import {
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
 // firebase authentication import
-import firebase from '@react-native-firebase/app';
-import auth from '@react-native-firebase/auth';
+// import firebase from '@react-native-firebase/app';
+// import auth from '@react-native-firebase/auth';
+import fire from '/home/javier/final_Project/PataShamba/src/config.js';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -28,17 +29,46 @@ class Signup extends Component {
       phone: '',
       email: '',
       password: '',
+      passwordConfirm: '',
       user: null,
     };
   }
 
 
    signUp = () => {
-    firebase
+     console.log('signup enabled');
+     let email = this.state.email;
+     let password = this.state.password;
+     let passwordConfirm = this.state.passwordConfirm;
+
+     if (password || email || passwordConfirm === '' ) {
+     console.log('empty');
+       Alert.alert(
+          'Input Error',
+          'Make sure to fill in all the input fields to proceed',
+          [
+            {
+              Text: 'Okay',
+            },
+          ],
+        );
+     } else {
+       if (password !== passwordConfirm) {
+          Alert.alert(
+          'Input Error',
+          'The two passwords should match',
+          [
+            {
+              Text: 'Okay',
+            },
+          ],
+        );
+       } else {
+         fire
       .auth()
       .createUserWithEmailAndPassword(
-        this.state.email,
-        this.state.password,
+        email,
+        password,
       )
       .then(() => {
         Alert.alert(
@@ -64,15 +94,9 @@ class Signup extends Component {
             ],
           );
         }
-
-        if (error.code === 'auth/invalid-email') {
-          Alert.alert('Failed', 'The email address provided is invalid', [
-            {
-              Text: 'Okay',
-            },
-          ]);
-        }
       });
+       }
+     }
   };
 
   render() {
@@ -82,7 +106,7 @@ class Signup extends Component {
           Enjoy the best of land deals all fitted to your budget. Fill in the
           fields to create an account.
         </Text>
-        <TextInput
+        {/* <TextInput
           style={signupStyles.input}
           placeholder={'Username'}
           value={this.state.username}
@@ -91,7 +115,7 @@ class Signup extends Component {
               this.setState({username: text});
             }}
           underlineColorAndroid="transparent"
-        />
+        /> */}
         <TextInput
           style={signupStyles.input}
           placeholder={'Email'}
@@ -102,7 +126,7 @@ class Signup extends Component {
             }}
           underlineColorAndroid="transparent"
         />
-        <TextInput
+        {/* <TextInput
           style={signupStyles.input}
           placeholder={'Phone'}
           value={this.state.phone}
@@ -111,7 +135,7 @@ class Signup extends Component {
               this.setState({phone: number});
             }}
           underlineColorAndroid="transparent"
-        />
+        /> */}
         <TextInput
           style={signupStyles.input}
           placeholder={'Password'}
@@ -121,17 +145,23 @@ class Signup extends Component {
               this.setState({password: text});
             }}
           underlineColorAndroid="transparent"
+          secureTextEntry={true}
         />
-        {/* <TextInput
+        <TextInput
           style={signupStyles.input}
           placeholder={'Confirm Password'}
           value={this.state.passwordConfirm}
           placeholderTextColor={'black'}
+          onChangeText={(text) => {
+              this.setState({passwordConfirm: text});
+            }}
           underlineColorAndroid="transparent"
-        /> */}
+          secureTextEntry={true}
+        />
         <TouchableOpacity
           style={signupStyles.signupBtn}
-          onpress={this.signUp()}>
+          onPress={() => this.signUp()}
+          >
           <Text style={signupStyles.btnText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>
