@@ -11,6 +11,7 @@ import Welcome from '/home/javier/final_Project/PataShamba/appmodules/screens/we
 import Chat from '/home/javier/final_Project/PataShamba/appmodules/screens/Chat.js';
 import Filter from '/home/javier/final_Project/PataShamba/appmodules/screens/Filter.js';
 import More from '/home/javier/final_Project/PataShamba/appmodules/screens/More.js';
+import LandInfo from '/home/javier/final_Project/PataShamba/appmodules/screens/LandInfo.js';
 
 // screens in the more tab
 import SellOpt from '/home/javier/final_Project/PataShamba/appmodules/screens/SellOpt.js';
@@ -242,6 +243,19 @@ export default class App extends Component {
           <Stack.Screen
             name="Saved"
             component={Saved}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="LandInfo"
+            component={LandInfo}
             options={{
               headerStyle: {
                 backgroundColor: '#388E3C',

@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {
   Text,
-  TouchableNativeFeedback,
+  TouchableWithoutFeedback,
   StyleSheet,
   Dimensions,
   TextInput,
@@ -115,14 +115,18 @@ class Filter extends Component {
         </View>
 
         {this.state.data.map((data, index) => (
-          <View style={filterStyles.cardContainer} key={index}>
-            <View>
-              <Text style={filterStyles.locationText}>{data.Location}</Text>
-              <Text style={filterStyles.descriptionText}>{data.Owner}</Text>
-              <Text style={filterStyles.descriptionText}>{data.Size}</Text>
-              <Text style={filterStyles.priceText}>Kshs. {data.Price}</Text>
-              <Text style={filterStyles.detailsText}>{data.Description}</Text>
-              {/* <SliderBox
+          <TouchableWithoutFeedback
+            onPress={() =>
+              this.props.navigation.navigate('LandInfo', {landData: data})
+            }>
+            <View style={filterStyles.cardContainer} key={index}>
+              <View>
+                <Text style={filterStyles.locationText}>{data.Location}</Text>
+                <Text style={filterStyles.descriptionText}>{data.Owner}</Text>
+                <Text style={filterStyles.descriptionText}>{data.Size}</Text>
+                <Text style={filterStyles.priceText}>Kshs. {data.Price}</Text>
+                <Text style={filterStyles.detailsText}>{data.Description}</Text>
+                {/* <SliderBox
                 images={this.state.images}
                 sliderBoxHeight={200}
                 // onCurrentImagePressed={index =>
@@ -160,36 +164,41 @@ class Filter extends Component {
                 }}
                 imageLoadingColor="#FFC107"
               /> */}
-              {/* <TouchableOpacity
+                {/* <TouchableOpacity
               style={filterStyles.detailsBtn}
               onPress={() => this.continue}>
               <Text style={filterStyles.detailsBtnTxt}>Details</Text>
             </TouchableOpacity> */}
-              <View style={filterStyles.iconContainer}>
-                {/* <Icon
+                <View style={filterStyles.iconContainer}>
+                  {/* <Icon
                   style={filterStyles.cardIcon}
                   size={20}
                   name={'message1'}
                 /> */}
-                <Icon style={filterStyles.cardIcon} size={20} name={'hearto'} />
-                <Text style={{color: 'red', left: 10}}>{data.Likes}</Text>
-                <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
-                <Text style={{color: 'grey', left: 10}}>Save</Text>
-                <Icon
-                  style={filterStyles.cardIcon}
-                  size={20}
-                  name={'bars'}
-                  onPress={this.showDetails(index)}
-                />
-                <Text style={{color: 'grey', left: 10}}>Details</Text>
-                {/* <Icon
+                  <Icon
+                    style={filterStyles.cardIcon}
+                    size={20}
+                    name={'hearto'}
+                  />
+                  <Text style={{color: 'red', left: 10}}>{data.Likes}</Text>
+                  <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
+                  <Text style={{color: 'grey', left: 10}}>Save</Text>
+                  <Icon
+                    style={filterStyles.cardIcon}
+                    size={20}
+                    name={'bars'}
+                    onPress={this.showDetails(index)}
+                  />
+                  <Text style={{color: 'grey', left: 10}}>Details</Text>
+                  {/* <Icon
                   style={filterStyles.cardIcon}
                   size={20}
                   name={'sharealt'}
                 /> */}
+                </View>
               </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         ))}
       </ScrollView>
     );
