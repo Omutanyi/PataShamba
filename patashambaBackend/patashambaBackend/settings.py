@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'lands',
     'users',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -81,10 +82,10 @@ WSGI_APPLICATION = 'patashambaBackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
         # 'NAME': 'patashamba',
         # 'USER' : 'superpatashamba',
         # 'PASSWORD' : 'ps34307922',
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'patashamba',
         'USER' : 'superpatashamba',
