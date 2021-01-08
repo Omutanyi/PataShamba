@@ -6,7 +6,7 @@ from users.models import user
 
 class chat_room(models.Model):
     room_id = models.BigIntegerField(primary_key = True)
-    # land_id = models.ForeignKey(land, on_delete=models.CASCADE, null=True)
+    land_id = models.ForeignKey(land, on_delete=models.CASCADE, null=True)
     room_open = models.BooleanField(default=False)
 
     def __str__(self):

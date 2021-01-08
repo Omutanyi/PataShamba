@@ -12,6 +12,6 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(ChatRoomAdmin, ChatRoomAdmin)
+admin.site.register(chat_room, ChatRoomAdmin)
 admin.site.register(message, MessageAdmin)
 admin.site.register(participant, ParticipantAdmin)

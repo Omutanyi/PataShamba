@@ -14,3 +14,12 @@ class user(models.Model):
     
     def __str__(self):
         return self.user_id
+
+class admin_message(models.Model):
+    admin_message_id = models.AutoField(primary_key=True)
+    text = models.CharField(max_length=100, null=True)
+    sender = models.ForeignKey(user, on_delete=models.SET_NULL, null=True)
+    sent_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.admin_message_id
