@@ -13,7 +13,7 @@ from users.models import user
 #         return self.location_id
 
 class land(models.Model):
-    land_id = models.BigIntegerField(primary_key = True)
+    land_id = models.AutoField(primary_key = True)
     description = models.TextField(default='Land description')
     likes = models.BigIntegerField(null=True)
 

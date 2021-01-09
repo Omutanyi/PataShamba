@@ -6,6 +6,7 @@ class UserAdmin(admin.ModelAdmin):
 
 class messageAdmin(admin.ModelAdmin): 
   list_display = ('admin_message_id', 'text', 'sender', 'sent_at')
+  
 
 # Register your models here.
 admin.site.register(user, UserAdmin)

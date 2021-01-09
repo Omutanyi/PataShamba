@@ -15,29 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include             
-from rest_framework import routers         
+from rest_framework import routers     
+from rest_framework.urlpatterns import format_suffix_patterns    
 from lands.views import LandView, LandOwnerView, LikeView, SaveView, BiddingView, BidView, OnSaleView
 from users.views import UserView, AdminMessageView
 from chat.views import MessageView, ParticipantView, ChatRoomView
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
 
-router.register(r'lands/land', LandView, 'land') 
-router.register(r'lands/land_owner', LandOwnerView, 'land_owner') 
-router.register(r'lands/like', LikeView, 'like')
-router.register(r'lands/save', SaveView, 'save')
-router.register(r'lands/bidding', BiddingView, 'bidding')
-router.register(r'lands/bid', BidView, 'bidding')
-router.register(r'lands/on_sale', OnSaleView, 'on_sale')
-
-router.register(r'users/user', UserView, 'user') 
-router.register(r'users/admin_message', AdminMessageView, 'admin_message')
-
-router.register(r'chat/message', MessageView, 'message')
-router.register(r'chat/participant', ParticipantView, 'participant')
-router.register(r'chat/chat_room', ChatRoomView, 'chat_room')
+# router.register(r'users/', include('users.urls'))
+# router.register(r'chat/', include('chat.urls'))
+# router.register(r'lands/', include('lands.urls'))
+# router.register(r'lands/land/<int:pk>/land_owner', LandOwnerView, 'land_owner') 
+# router.register(r'lands/like', LikeView, 'like')
+# router.register(r'lands/save', SaveView, 'save')
+# router.register(r'lands/bidding', BiddingView, 'bidding')
+# router.register(r'lands/bid', BidView, 'bid')
+# router.register(r'lands/on_sale', OnSaleView, 'on_sale')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    # path('api/', include(router.urls)),
+    path(r'users/', include('users.urls')),
+    path(r'chat/', include('chat.urls')),
+    path(r'lands/', include('chat.urls')),
 ]

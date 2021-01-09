@@ -35,20 +35,32 @@ class login extends Component {
     };
   }
 
-  // login() {
-  //   const {username, password} = this.state;
-  //   // console.warn(username, password);
-  //   if (username == 'Admin' && password == 'Admin') {
-  //     this.props.navigation.navigate('Pata Shamba');
-  //   } else {
-  //     // console.warn('Permission denied');
-  //     Alert.alert('Error', 'username/password mismatch', [
-  //       {
-  //         Text: 'Okay',
-  //       },
-  //     ]);
-  //   }
-  // }
+  componentDidMount() {
+    this.fetchDataFromApi();
+  }
+
+  fetchDataFromApi = () => {
+    const url = 'hhttp://127.0.0.1:8000/users/';
+    console.log('fetching from api');
+
+    this.setState({loading: true});
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        console.log('local api data', res);
+        // this.setState({
+        //   data: res,
+        //   error: null,
+        //   loading: false,
+        //   refreshing: false,
+        // });
+      })
+      .catch(error => {
+        console.log('fetching from api failed');
+        this.setState({error, loading: false});
+      });
+  };
 
   login = () => {
     if (this.state.typedEmail === '' && this.state.password === '') {

@@ -74,31 +74,6 @@ class Filter extends Component {
       this.setState({data: newDataArray});
       console.log(newDataArray);
     });
-
-    // let landDetails = await firestore().collection('Lands');
-
-    // let getDoc = landsRef
-    //   .get()
-    //   .then(doc => {
-    //     if (!doc.exists) {
-    //       console.log('No such document!');
-    //     } else {
-    //       console.log('LandDetails data:', doc.data());
-    //       var newDataArray = this.state.data.slice();
-    //       newDataArray.push(doc.data());
-    //       this.setState({data: newDataArray});
-    //       console.log(this.state.data);
-    //       if (newDataArray.length <= 1) {
-    //         console.log('array is short');
-    //         this.savedata();
-    //       } else {
-    //         console.log('array is long');
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('Error getting document', err);
-    //   });
   }
 
   render() {
