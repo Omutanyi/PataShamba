@@ -59,7 +59,7 @@ class SingleLand(APIView):
         land.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class LandOwnerView(viewsets.ModelViewSet):      
+class LandOwnerView(APIView):      
   # serializer_class = LandOwnerSerializer        
   # queryset = land_owner.objects.all()  
     @classmethod

@@ -10,6 +10,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import axios from 'axios';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
@@ -40,12 +41,13 @@ class login extends Component {
   }
 
   fetchDataFromApi = () => {
-    const url = 'hhttp://127.0.0.1:8000/users/';
+    const url = 'http://127.0.0.1:8000/users/';
     console.log('fetching from api');
 
     this.setState({loading: true});
 
-    fetch(url)
+    axios
+      .get(url)
       .then(res => res.json())
       .then(res => {
         console.log('local api data', res);
@@ -57,7 +59,7 @@ class login extends Component {
         // });
       })
       .catch(error => {
-        console.log('fetching from api failed');
+        console.log('fetching from api failed', error);
         this.setState({error, loading: false});
       });
   };

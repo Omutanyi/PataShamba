@@ -13,6 +13,7 @@ import {
 import {SliderBox} from 'react-native-image-slider-box';
 import Icon from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
+import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -75,6 +76,30 @@ class Filter extends Component {
       console.log(newDataArray);
     });
   }
+
+  fetchDataFromApi = () => {
+    const url = 'http://127.0.0.1:8000/users/';
+    console.log('fetching from api');
+
+    this.setState({loading: true});
+
+    axios
+      .get(url)
+      .then(res => res.json())
+      .then(res => {
+        console.log('local api data', res);
+        // this.setState({
+        //   data: res,
+        //   error: null,
+        //   loading: false,
+        //   refreshing: false,
+        // });
+      })
+      .catch(error => {
+        console.log('fetching from api failed');
+        this.setState({error, loading: false});
+      });
+  };
 
   render() {
     return (

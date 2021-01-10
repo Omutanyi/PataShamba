@@ -38,5 +38,5 @@ urlpatterns = [
     # path('api/', include(router.urls)),
     path(r'users/', include('users.urls')),
     path(r'chat/', include('chat.urls')),
-    path(r'lands/', include('chat.urls')),
+    path(r'lands/', include('lands.urls')),
 ]
