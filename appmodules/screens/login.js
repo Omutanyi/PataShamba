@@ -37,32 +37,69 @@ class login extends Component {
   }
 
   componentDidMount() {
-    this.fetchDataFromApi();
-  }
-
-  fetchDataFromApi = () => {
-    const url = 'http://127.0.0.1:8000/users/';
-    console.log('fetching from api');
-
-    this.setState({loading: true});
-
-    axios
-      .get(url)
-      .then(res => res.json())
+    const url = '127.0.0.1:8000/users';
+    // this.fetchDataFromApi();
+    // axios.get('http://127.0.0.1:8000/users/');
+    // const conn = fetch('http://127.0.0.1:8000/users/')
+    const conn = axios
+      .get('http://192.168.0.101:8000/users/')
+      // .then(res => res.json())
       .then(res => {
-        console.log('local api data', res);
-        // this.setState({
-        //   data: res,
-        //   error: null,
-        //   loading: false,
-        //   refreshing: false,
-        // });
+        const allRes = res.data;
+        console.log('res should load');
+        console.log('allRes', allRes);
       })
       .catch(error => {
-        console.log('fetching from api failed', error);
-        this.setState({error, loading: false});
+        console.log('Error fetching doc', error);
       });
-  };
+
+    console.log('conn', conn);
+
+    // console.log('conn', conn);
+    //   fetch(url, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   })
+    //     .then(response => response.json())
+    //     .then(responseData => {
+    //       // if (responseData.Error) {
+    //       //   Alert.alert('Errore');
+    //       // }
+    //       // global.utente = responseData;
+    //       console.log('responseData', responseData);
+    //     })
+    //     .catch(err => {
+    //       console.log('error', err);
+    //     });
+  }
+
+  // async fetchDataFromApi() {
+  //   const url = '127.0.0.1:8000/users/';
+  //   console.log('fetching from api');
+
+  //   this.setState({loading: true});
+
+  //   // const getIpAdd = await axios.get()
+
+  // await axios
+  //   .get('https://127.0.0.1:8000/users/')
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     console.log('local api data', url, res);
+  //     // this.setState({
+  //     //   data: res,
+  //     //   error: null,
+  //     //   loading: false,
+  //     //   refreshing: false,
+  //     // });
+  //   })
+  //   .catch(error => {
+  //     console.log('fetching from api failed', url, error);
+  //     this.setState({error, loading: false});
+  //   });
+  // }
 
   login = () => {
     if (this.state.typedEmail === '' && this.state.password === '') {

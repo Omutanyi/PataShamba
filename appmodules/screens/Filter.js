@@ -17,6 +17,51 @@ import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
 
+const datax = [
+  {
+    description:
+      'RESIDENTIAL LAND for sale in Marula Lane, Karen RESIDENTIAL LAND Are you looking for a place to develop and call home? We got you covered.  This very pleasant residential, one- acre plot is well set up in a gated community near Karen Country Club in a serene and secure environment. The plot is rich in red soil with lots of indigenous shrubs and a great view of the Ngong Hills. You do not have to worry about electricity and water since it is already connected.  Plot is Negotiable.  Book a viewing today!',
+    size: '6 acres',
+    likes: 57,
+    location: 'Kitengela',
+  },
+  {
+    description:
+      'RESIDENTIAL LAND for sale in Marula Lane, Karen RESIDENTIAL LAND Are you looking for a place to develop and call home? We got you covered.  This very pleasant residential, one- acre plot is well set up in a gated community near Karen Country Club in a serene and secure environment. The plot is rich in red soil with lots of indigenous shrubs and a great view of the Ngong Hills. You do not have to worry about electricity and water since it is already connected.  Plot is Negotiable.  Book a viewing today!',
+    size: '3 acres',
+    likes: 85,
+    location: 'Ngong',
+  },
+  {
+    description:
+      'RESIDENTIAL LAND for sale in Marula Lane, Karen RESIDENTIAL LAND Are you looking for a place to develop and call home? We got you covered.  This very pleasant residential, one- acre plot is well set up in a gated community near Karen Country Club in a serene and secure environment. The plot is rich in red soil with lots of indigenous shrubs and a great view of the Ngong Hills. You do not have to worry about electricity and water since it is already connected.  Plot is Negotiable.  Book a viewing today!',
+    size: '1 acre',
+    likes: 37,
+    location: 'Kajiado',
+  },
+  {
+    description:
+      'RESIDENTIAL LAND for sale in Marula Lane, Karen RESIDENTIAL LAND Are you looking for a place to develop and call home? We got you covered.  This very pleasant residential, one- acre plot is well set up in a gated community near Karen Country Club in a serene and secure environment. The plot is rich in red soil with lots of indigenous shrubs and a great view of the Ngong Hills. You do not have to worry about electricity and water since it is already connected.  Plot is Negotiable.  Book a viewing today!',
+    size: '4 acres',
+    likes: 157,
+    location: 'Ruiru',
+  },
+  {
+    description:
+      'RESIDENTIAL LAND for sale in Marula Lane, Karen RESIDENTIAL LAND Are you looking for a place to develop and call home? We got you covered.  This very pleasant residential, one- acre plot is well set up in a gated community near Karen Country Club in a serene and secure environment. The plot is rich in red soil with lots of indigenous shrubs and a great view of the Ngong Hills. You do not have to worry about electricity and water since it is already connected.  Plot is Negotiable.  Book a viewing today!',
+    size: '10 acres',
+    likes: 371,
+    location: 'Kiambu',
+  },
+  {
+    description:
+      'RESIDENTIAL LAND for sale in Marula Lane, Karen RESIDENTIAL LAND Are you looking for a place to develop and call home? We got you covered.  This very pleasant residential, one- acre plot is well set up in a gated community near Karen Country Club in a serene and secure environment. The plot is rich in red soil with lots of indigenous shrubs and a great view of the Ngong Hills. You do not have to worry about electricity and water since it is already connected.  Plot is Negotiable.  Book a viewing today!',
+    size: '15 acres',
+    likes: 5127,
+    location: 'Kitusuru',
+  },
+];
+
 class Filter extends Component {
   constructor(props) {
     super(props);
@@ -75,31 +120,44 @@ class Filter extends Component {
       this.setState({data: newDataArray});
       console.log(newDataArray);
     });
+
+    axios({
+      method: 'post',
+      url: 'http://192.168.0.101:8000/lands/',
+      data: datax,
+    }).then(
+      response => {
+        console.log('response after post', response);
+      },
+      error => {
+        console.log(error);
+      },
+    );
   }
 
-  fetchDataFromApi = () => {
-    const url = 'http://127.0.0.1:8000/users/';
-    console.log('fetching from api');
+  // fetchDataFromApi = () => {
+  //   const url = 'http://127.0.0.1:8000/users/';
+  //   console.log('fetching from api');
 
-    this.setState({loading: true});
+  //   this.setState({loading: true});
 
-    axios
-      .get(url)
-      .then(res => res.json())
-      .then(res => {
-        console.log('local api data', res);
-        // this.setState({
-        //   data: res,
-        //   error: null,
-        //   loading: false,
-        //   refreshing: false,
-        // });
-      })
-      .catch(error => {
-        console.log('fetching from api failed');
-        this.setState({error, loading: false});
-      });
-  };
+  //   axios
+  //     .get(url)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       console.log('local api data', res);
+  //       // this.setState({
+  //       //   data: res,
+  //       //   error: null,
+  //       //   loading: false,
+  //       //   refreshing: false,
+  //       // });
+  //     })
+  //     .catch(error => {
+  //       console.log('fetching from api failed');
+  //       this.setState({error, loading: false});
+  //     });
+  // };
 
   render() {
     return (

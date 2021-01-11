@@ -22,6 +22,7 @@ class land(models.Model):
     # price = models.CharField(max_length=100, null=True)
     # negotiable = models.BooleanField(default=False)
     size = models.CharField(max_length=100, null=True)
+    location =  models.TextField(default='Location not disclosed')
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
     # owner = models.ForeignKey('lands.land_owner', on_delete=models.CASCADE)
     # on_sale = models.BooleanField(defaut=False)
