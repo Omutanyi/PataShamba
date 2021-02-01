@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   View,
+  Alert,
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Marker} from 'react-native-maps';
+import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -19,6 +21,38 @@ class LandInfo extends Component {
       data: props.route.params.landData,
     };
   }
+
+  initiatePurchase = () => {
+    const datax = this.state.data;
+    // if (this.state.data.purchase_initiated === true) {
+    //   this.moveToBidding();
+    // } else {
+    // set to true,
+    axios({
+      method: 'put',
+      url: '',
+      data: datax.land_id,
+      headers: {
+        Accept: 'application/json',
+      },
+    }).then(response => {
+      Alert.alert('Successfull', 'Data posted successfully', response, [
+        {
+          Text: 'Okay',
+        },
+      ]);
+    });
+    // start counter time,// make land bidding // go to bidding
+    // }
+  };
+
+  moveToBidding = () => {
+    console.log('moving to bidding');
+    this.props.navigation.navigate('Bidding', {
+      initial_price: this.state.data.price,
+    });
+  };
+
   render() {
     console.log(this.state.data);
     return (
@@ -48,15 +82,15 @@ class LandInfo extends Component {
           </View>
 
           <View style={styles.infoCard}>
-            <Text style={styles.infoText}>{this.state.data.Location}</Text>
+            <Text style={styles.infoText}>{this.state.data.size}</Text>
             <Text style={styles.divider}>|</Text>
-            <Text style={styles.infoText}>{this.state.data.Size}</Text>
+            <Text style={styles.infoText}>{this.state.data.likes} likes</Text>
             <Text style={styles.divider}>|</Text>
-            <Text style={styles.infoText}>{this.state.data.Price}</Text>
+            <Text style={styles.infoText}>negotiable</Text>
           </View>
 
           <View style={styles.description}>
-            <Text style={styles.descText}>{this.state.data.Description}</Text>
+            <Text style={styles.descText}>{this.state.data.description}</Text>
             <View style={styles.btnView}>
               <TouchableOpacity style={styles.btn}>
                 <Text style={styles.btnTxt}>VIEW DOCS</Text>

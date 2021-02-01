@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import land, land_owner, like, save, bidding, bid, on_sale
 
 class LandAdmin(admin.ModelAdmin): 
-  list_display = ('land_id', 'description', 'likes','size', 'pub_date')
+  list_display = ('land_id', 'description', 'likes','size', 'town', 'address_pin', 'pub_date')
 
 class LandOwnerAdmin(admin.ModelAdmin):
     list_display = ('land_owner_id', 'land_id','user_id', 'pub_date')

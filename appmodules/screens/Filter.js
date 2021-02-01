@@ -111,53 +111,41 @@ class Filter extends Component {
   };
 
   async componentDidMount() {
-    const landsRef = firestore().collection('Lands');
-    const snapshot = await landsRef.get();
-    var newDataArray = this.state.data.slice();
-    snapshot.forEach(doc => {
-      // console.log(doc.id, '=>', doc.data());
-      newDataArray.push(doc.data());
-      this.setState({data: newDataArray});
-      console.log(newDataArray);
-    });
+    // const landsRef = firestore().collection('Lands');
+    // const snapshot = await landsRef.get();
+    // var newDataArray = this.state.data.slice();
+    // snapshot.forEach(doc => {
+    //   // console.log(doc.id, '=>', doc.data());
+    //   newDataArray.push(doc.data());
+    //   this.setState({data: newDataArray});
+    //   console.log(newDataArray);
+    // });
 
-    axios({
-      method: 'post',
-      url: 'http://192.168.0.101:8000/lands/',
-      data: datax,
-    }).then(
-      response => {
-        console.log('response after post', response);
-      },
-      error => {
-        console.log(error);
-      },
-    );
+    // axios({
+    //   method: 'post',
+    //   url: 'http://192.168.0.101:8000/lands/',
+    //   data: datax,
+    // }).then(
+    //   response => {
+    //     console.log('response after post', response);
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   },
+    // );192.168.43.77
+
+    axios
+      .get('http://192.168.0.16:8000/lands/')
+      // .then(res => res.json())
+      .then(res => {
+        const landRes = res.data;
+        this.setState({data: landRes});
+        console.log('landRes', landRes);
+      })
+      .catch(error => {
+        console.log('Error fetching doc', error);
+      });
   }
-
-  // fetchDataFromApi = () => {
-  //   const url = 'http://127.0.0.1:8000/users/';
-  //   console.log('fetching from api');
-
-  //   this.setState({loading: true});
-
-  //   axios
-  //     .get(url)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       console.log('local api data', res);
-  //       // this.setState({
-  //       //   data: res,
-  //       //   error: null,
-  //       //   loading: false,
-  //       //   refreshing: false,
-  //       // });
-  //     })
-  //     .catch(error => {
-  //       console.log('fetching from api failed');
-  //       this.setState({error, loading: false});
-  //     });
-  // };
 
   render() {
     return (
@@ -179,54 +167,15 @@ class Filter extends Component {
             }>
             <View style={filterStyles.cardContainer} key={index}>
               <View>
-                <Text style={filterStyles.locationText}>{data.Location}</Text>
-                <Text style={filterStyles.descriptionText}>{data.Owner}</Text>
-                <Text style={filterStyles.descriptionText}>{data.Size}</Text>
-                <Text style={filterStyles.priceText}>Kshs. {data.Price}</Text>
-                <Text style={filterStyles.detailsText}>{data.Description}</Text>
-                {/* <SliderBox
-                images={this.state.images}
-                sliderBoxHeight={200}
-                // onCurrentImagePressed={index =>
-                //   console.warn(`image ${index} pressed`)
-                // }
-                dotColor="#FFC107"
-                inactiveDotColor="#90A4AE"
-                paginationBoxVerticalPadding={20}
-                // autoplay
-                circleLoop
-                resizeMethod={'resize'}
-                resizeMode={'cover'}
-                paginationBoxStyle={{
-                  position: 'absolute',
-                  bottom: 0,
-                  padding: 0,
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                  paddingVertical: 10,
-                }}
-                dotStyle={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 7,
-                  marginHorizontal: 0,
-                  padding: 0,
-                  margin: 0,
-                  backgroundColor: 'rgba(128, 128, 128, 0.92)',
-                }}
-                ImageComponentStyle={{
-                  borderRadius: 10,
-                  width: '80%',
-                  marginTop: 25,
-                }}
-                imageLoadingColor="#FFC107"
-              /> */}
-                {/* <TouchableOpacity
-              style={filterStyles.detailsBtn}
-              onPress={() => this.continue}>
-              <Text style={filterStyles.detailsBtnTxt}>Details</Text>
-            </TouchableOpacity> */}
+                <Text style={filterStyles.locationText}>
+                  Location undisclosed
+                </Text>
+                <Text style={filterStyles.descriptionText}>
+                  {data.pub_date}
+                </Text>
+                <Text style={filterStyles.descriptionText}>{data.size}</Text>
+                {/* <Text style={filterStyles.priceText}>Kshs. {data.Price}</Text> */}
+                <Text style={filterStyles.detailsText}>{data.description}</Text>
                 <View style={filterStyles.iconContainer}>
                   {/* <Icon
                   style={filterStyles.cardIcon}
@@ -238,7 +187,7 @@ class Filter extends Component {
                     size={20}
                     name={'hearto'}
                   />
-                  <Text style={{color: 'red', left: 10}}>{data.Likes}</Text>
+                  <Text style={{color: 'red', left: 10}}>{data.likes}</Text>
                   <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
                   <Text style={{color: 'grey', left: 10}}>Save</Text>
                   <Icon

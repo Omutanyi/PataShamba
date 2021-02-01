@@ -13,9 +13,9 @@ import {
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
 // firebase authentication import
-// import firebase from '@react-native-firebase/app';
-// import auth from '@react-native-firebase/auth';
-import fire from '/home/javier/final_Project/PataShamba/src/config.js';
+// import firebase from 'react-native-firebase';
+// import firebase from 'firebase';
+import firebase from '/home/javier/final_Project/PataShamba/src/config.js';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -36,12 +36,11 @@ class Signup extends Component {
 
 
    signUp = () => {
-     console.log('signup enabled');
      let email = this.state.email;
      let password = this.state.password;
      let passwordConfirm = this.state.passwordConfirm;
 
-     if (password || email || passwordConfirm === '' ) {
+     if (password === '' || email === '' || passwordConfirm === '' ) {
      console.log('empty');
        Alert.alert(
           'Input Error',
@@ -64,23 +63,22 @@ class Signup extends Component {
           ],
         );
        } else {
-         fire
-      .auth()
-      .createUserWithEmailAndPassword(
-        email,
-        password,
+      firebase.auth().createUserWithEmailAndPassword(
+        this.state.email,
+        this.state.password,
       )
       .then(() => {
+     console.log('signup enabled');
         Alert.alert(
           'Successfull',
           'Your account has been created successfully',
           [
             {
               Text: 'Okay',
-              onPress: this.props.navigation.navigate('Queue'),
             },
           ],
         );
+        // this.props.navigation.navigate('Queue');//
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
@@ -93,6 +91,8 @@ class Signup extends Component {
               },
             ],
           );
+        } else {
+          console.log(error.message);
         }
       });
        }
@@ -118,7 +118,7 @@ class Signup extends Component {
         /> */}
         <TextInput
           style={signupStyles.input}
-          placeholder={'Email'}
+          placeholder={'email'}
           value={this.state.email}
           placeholderTextColor={'black'}
           onChangeText={(text) => {
@@ -138,7 +138,7 @@ class Signup extends Component {
         /> */}
         <TextInput
           style={signupStyles.input}
-          placeholder={'Password'}
+          placeholder={'password'}
           value={this.state.password}
           placeholderTextColor={'black'}
           onChangeText={(text) => {

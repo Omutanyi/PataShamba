@@ -4,7 +4,7 @@ from .models import land, land_owner, like, save, bidding, bid, on_sale
 class LandSerializer(serializers.ModelSerializer):
   class Meta:
     model = land
-    fields = ('land_id', 'description', 'likes','size', 'pub_date')
+    fields = ('land_id', 'description', 'likes', 'size', 'town', 'address_pin', 'pub_date')
 
 class LandOwnerSerializer(serializers.ModelSerializer):
   class Meta:

@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.gis',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -88,8 +89,8 @@ DATABASES = {
         # 'NAME': 'patashamba',
         # 'USER' : 'superpatashamba',
         # 'PASSWORD' : 'ps34307922',
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'patashamba',
         'USER' : 'superpatashamba',
         'PASSWORD' : 'ps34307922',
@@ -142,7 +143,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_REGEX_WHITELIST = [
     'http://localhost:3000'
     'http://192.168.0.101:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    # 'http://192.168.0.16:3000'
 ]
 
 STATIC_URL = '/static/'

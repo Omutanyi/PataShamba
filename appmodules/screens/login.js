@@ -37,10 +37,6 @@ class login extends Component {
   }
 
   componentDidMount() {
-    const url = '127.0.0.1:8000/users';
-    // this.fetchDataFromApi();
-    // axios.get('http://127.0.0.1:8000/users/');
-    // const conn = fetch('http://127.0.0.1:8000/users/')
     const conn = axios
       .get('http://192.168.0.101:8000/users/')
       // .then(res => res.json())

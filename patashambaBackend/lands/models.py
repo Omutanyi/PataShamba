@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 from users.models import user 
 # from django.contrib.gis.db import models
 
@@ -18,14 +18,13 @@ class land(models.Model):
     likes = models.BigIntegerField(null=True)
 
     # location = models.ForeignKey(location, on_delete=models.CASCADE, null=True)
-
-    # price = models.CharField(max_length=100, null=True)
-    # negotiable = models.BooleanField(default=False)
     size = models.CharField(max_length=100, null=True)
-    location =  models.TextField(default='Location not disclosed')
+    town =  models.TextField(default='Town not disclosed')
+    address_pin = models.PointField(srid=4326, null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
-    # owner = models.ForeignKey('lands.land_owner', on_delete=models.CASCADE)
-    # on_sale = models.BooleanField(defaut=False)
+    # price = models.BigIntegerField(null=True)
+    # negotiable = models.BooleanField(default=False)
+    # purchase_initiated = models.BooleanField(default=False)
 
     def __str__(self):
         return self.land_id
@@ -79,7 +78,9 @@ class bid(models.Model):
 class on_sale(models.Model):
     on_sale_id = models.AutoField(primary_key=True)
     land_id = models.ForeignKey(land, on_delete=models.SET_NULL, null=True)
+    # price = models.BigIntegerField(default_value=0)
     negotiable = models.BooleanField(default=False)
+    purchase_initiated = models.BooleanField(default=False)
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
