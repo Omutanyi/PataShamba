@@ -66,6 +66,8 @@ class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchTerm: '',
+      loading: false,
       data: [],
       details: [],
       images: [
@@ -111,16 +113,6 @@ class Filter extends Component {
   };
 
   async componentDidMount() {
-    // const landsRef = firestore().collection('Lands');
-    // const snapshot = await landsRef.get();
-    // var newDataArray = this.state.data.slice();
-    // snapshot.forEach(doc => {
-    //   // console.log(doc.id, '=>', doc.data());
-    //   newDataArray.push(doc.data());
-    //   this.setState({data: newDataArray});
-    //   console.log(newDataArray);
-    // });
-
     // axios({
     //   method: 'post',
     //   url: 'http://192.168.0.101:8000/lands/',
@@ -135,7 +127,7 @@ class Filter extends Component {
     // );192.168.43.77
 
     axios
-      .get('http://192.168.0.16:8000/lands/')
+      .get('http://192.168.0.101:8000/lands/')
       // .then(res => res.json())
       .then(res => {
         const landRes = res.data;
@@ -147,15 +139,56 @@ class Filter extends Component {
       });
   }
 
+  handleSearch = () => {
+    var searchTerm = this.state.searchTerm;
+    if (searchTerm !== '') {
+      //this.setState({loading: true});
+      axios
+        .get(
+          `http://192.168.0.101:8000/lands/SearchLands/${
+            this.state.searchTerm
+          }`,
+        )
+        // .then(res => res.json())
+        .then(res => {
+          const searchRes = res.data;
+          this.setState({data: searchRes});
+          console.log('searchRes...', searchRes);
+          //this.setState({loading: true});
+        })
+        .catch(error => {
+          console.log('Error fetching searchRes', error);
+        });
+    } else {
+      axios
+        .get('http://192.168.0.101:8000/lands/')
+        // .then(res => res.json())
+        .then(res => {
+          const landRes = res.data;
+          this.setState({data: landRes});
+          console.log('landRes', landRes);
+        })
+        .catch(error => {
+          console.log('Error fetching doc', error);
+        });
+    }
+  };
+
   render() {
     return (
       <ScrollView style={filterStyles.primaryView}>
         <View style={filterStyles.searchView}>
           <TextInput
-            placeholder="Search available lands"
+            placeholder="Enter town to search available lands"
+            name="search"
+            value={this.state.searchTerm}
+            onChangeText={text => this.setState({searchTerm: text})}
+            method="get"
             style={filterStyles.searchInput}
           />
-          <TouchableOpacity style={filterStyles.searchBtn}>
+          <TouchableOpacity
+            style={filterStyles.searchBtn}
+            onPress={() => this.handleSearch()}>
             <Text style={filterStyles.btnText}>SEARCH</Text>
           </TouchableOpacity>
         </View>
@@ -167,9 +200,7 @@ class Filter extends Component {
             }>
             <View style={filterStyles.cardContainer} key={index}>
               <View>
-                <Text style={filterStyles.locationText}>
-                  Location undisclosed
-                </Text>
+                <Text style={filterStyles.locationText}>{data.town}</Text>
                 <Text style={filterStyles.descriptionText}>
                   {data.pub_date}
                 </Text>
@@ -281,14 +312,14 @@ const filterStyles = StyleSheet.create({
     marginRight: 10,
   },
   locationText: {
-    fontWeight: '700',
+    fontWeight: '400',
     fontSize: 17,
     fontFamily: 'notoserif',
     color: '#388E3C',
   },
   descriptionText: {
     fontWeight: '300',
-    fontSize: 15,
+    fontSize: 12,
     fontFamily: 'notoserif',
     color: '#757575',
   },

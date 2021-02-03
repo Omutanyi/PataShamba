@@ -3,9 +3,12 @@ from rest_framework import viewsets
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
+# from rest_framework.generics import ListApiView
 from rest_framework import status          
-from .serializers import LandSerializer, LandOwnerSerializer, LikeSerializer, SaveSerializer, BiddingSerializer, BidSerializer, OnSaleSerializer  
-from .models import land, land_owner, like, save, bidding, bid, on_sale
+from .serializers import LandSerializer, LandOwnerSerializer, LikeSerializer, SaveSerializer, BiddingSerializer, BidSerializer, OnSaleSerializer, ImageSerializer  
+from .models import land, land_owner, like, save, bidding, bid, on_sale, land_image
+from django.contrib.postgres.search import SearchVector, SearchQuery
 
 # Create your views here.
 
@@ -28,6 +31,23 @@ class LandView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SearchLands(APIView):
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def get(self, request, **kwargs):
+        queryset = land.objects.all()
+        query = self.kwargs.get('search')
+        print('the query is', query)
+        # result = queryset.annotate(
+        #     search=SearchVector('town'),
+        #     ).filter(search = SearchQuery(query) )
+
+        result = queryset.filter(town__icontains=query)
+        serializer = LandSerializer(result, many=True)
+        return Response(serializer.data)
 
 class SingleLand(APIView):
 
@@ -351,4 +371,65 @@ class SingleOnSale(APIView):
     def delete(self, request, pk, format=None):
         on_sale = self.get_object(pk)
         on_sale.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class Image(APIView):      
+  # serializer_class = OnSaleSerializer        
+  # queryset = on_sale.objects.all()
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def get(self, request, format=None):
+        queryset = land_image.objects.all()
+        serializer = ImageSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ImageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SearchImage(APIView):
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def get(self, request, **kwargs):
+        queryset = land_image.objects.all()
+        query = self.kwargs.get()
+        result = queryset.filter(land_image_id__icontains=query)
+        serializer = ImageSerializer(result, many=True)
+        return Response(serializer.data)
+
+class SingleImage(APIView):
+
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def get_object(self, pk):
+        try:
+            return land_image.objects.get(pk=pk)
+        except on_sale.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        land_image = self.get_object(pk)
+        serializer = ImageSerializer(on_sale)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        land_image = self.get_object(pk)
+        serializer = ImageSerializer(bidding, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        land_image = self.get_object(pk)
+        land_image.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

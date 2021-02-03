@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import land, land_owner, like, save, bidding, bid, on_sale
+from .models import land, land_owner, like, save, bidding, bid, on_sale, land_image
 
 class LandSerializer(serializers.ModelSerializer):
   class Meta:
@@ -35,3 +35,8 @@ class OnSaleSerializer(serializers.ModelSerializer):
   class Meta:
     model = on_sale
     fields = ('on_sale_id', 'land_id','negotiable', 'pub_date')
+  
+class ImageSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = land_image
+    fields = ('land_image_id', 'land_id','image', 'pub_date')

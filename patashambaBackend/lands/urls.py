@@ -5,6 +5,7 @@ from lands import views
 urlpatterns = [
     path('', views.LandView.as_view()),
     path('<int:pk>/', views.SingleLand.as_view()),
+    path(r'SearchLands/<str:search>', views.SearchLands.as_view()),
     path(r'LandOwnerView/', views.LandOwnerView.as_view()),
     path(r'LandOwnerView/<int:pk>/', views.SingleLandOwner.as_view()),
     path(r'LikeView/', views.LikeView.as_view()),
@@ -15,6 +16,9 @@ urlpatterns = [
     path(r'BiddingView/<int:pk>/', views.SingleBidding.as_view()),
     path(r'BidView/', views.BidView.as_view()),
     path(r'BidView/<int:pk>/', views.SingleBid.as_view()),
+    path(r'Image/', views.Image.as_view()),
+    path(r'SearchImage/<int:pk>', views.SearchImage.as_view()),
+    path(r'SingleImage/<int:pk>/', views.SingleImage.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

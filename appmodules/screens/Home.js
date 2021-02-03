@@ -1,19 +1,51 @@
 /* eslint-disable react/no-did-mount-set-state */
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, Platform, PermissionsAndroid, StyleSheet, View} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Marker} from 'react-native-maps';
 import firestore from '@react-native-firebase/firestore';
 import fire from '/home/javier/final_Project/PataShamba/src/config.js';
+import axios from 'axios';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       markers: [],
+      region: {
+                longitude: 0,
+                latitude: 0,
+                longitudeDelta: 0.004,
+                latitudeDelta: 0.009,
+            },
     };
+    // if (Platform.OS === 'android') {
+    //         this.requestLocationPermission();
+    //     }
+
   }
+
+  async requestLocationPermission() {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+            {
+              title: 'PataShamba App',
+              message: 'PataShamba App access to your location ',
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('You can use the location');
+          } else {
+            console.log('location permission denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+    }
+
+
   mapStyle = [
     {
       elementType: 'geometry',
@@ -257,40 +289,105 @@ class Home extends Component {
     },
   ];
 
+
   async componentDidMount() {
-    let landId = [];
+    // let landId = [];
     let marks = [];
-    await firestore()
-      .collection('Lands')
-      .get()
-      .then(querySnapshot => {
-        console.log('Total lands: ', querySnapshot.size);
+    // await firestore()
+    //   .collection('Lands')
+    //   .get()
+    //   .then(querySnapshot => {
+    //     console.log('Total lands: ', querySnapshot.size);
 
-        querySnapshot.forEach(documentSnapshot => {
-          // console.log('Land ID: ', documentSnapshot.id, documentSnapshot.data());
-          landId.push(documentSnapshot.id);
+    //     querySnapshot.forEach(documentSnapshot => {
+    //       // console.log('Land ID: ', documentSnapshot.id, documentSnapshot.data());
+    //       landId.push(documentSnapshot.id);
+    //     });
+    //   });
+
+    // console.log('lands :', landId);
+    // var idArray = landId.length;
+    // for (var i = 0; i < idArray; i++) {
+    //   await firestore()
+    //     .collection('Lands')
+    //     .doc(landId[i])
+    //     .collection('location')
+    //     .doc('coords')
+    //     .get()
+    //     .then(locationShot => {
+    //       console.log('Loc shot: ', locationShot.data().map);
+    //       var mapMarker = locationShot.data().map;
+    //       console.log('mapMarker shot: ', mapMarker);
+    //       marks.push(mapMarker);
+    //     });
+    // }
+
+    // this.setState({markers: marks});
+
+
+    // const granted = await PermissionsAndroid.check( PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION );
+    // if (granted) {
+    //    console.log( 'You can use the ACCESS_FINE_LOCATION' );
+    //    navigator.geolocation.getCurrentPosition(
+    //         (position) => {
+    //             console.log(position);
+    //             this.setState({
+    //                 region: {
+    //                     longitude: position.coords.longitude,
+    //                     latitude: position.coords.latitude,
+    //                     longitudeDelta: 0.004,
+    //                     latitudeDelta: 0.009,
+    //                 },
+    //             });
+    //         },
+    //         (error) => {
+    //             console.log(error.code, error.message);
+    //             throw error;
+    //         },
+    //         {
+    //             showLocationDialog: true,
+    //             forceRequestLocation: true,
+    //             enableHighAccuracy: true,
+    //             timeout: 15000,
+    //             maximumAge: 10000,
+    //         }
+    //     );
+    //   }
+    // else {
+    //     console.log( 'ACCESS_FINE_LOCATION permission denied' );
+    //     this.requestLocationPermission();
+    //   }
+
+    axios
+      .get('http://192.168.0.105:8000/lands/')
+      .then(res => {
+        const landRes = res.data;
+        // this.setState({data: landRes});
+        console.log('land data', landRes);
+        landRes.forEach(documentSnapshot => {
+           console.log('landRes likes : ', documentSnapshot.address_pin);
+           marks.push(documentSnapshot.address_pin);
         });
+        console.log('marks new:', marks);
+        this.setState({markers: marks});
+      })
+      .catch(error => {
+        console.log('Error fetching doc', error);
       });
-
-    console.log('lands :', landId);
-    var idArray = landId.length;
-    for (var i = 0; i < idArray; i++) {
-      await firestore()
-        .collection('Lands')
-        .doc(landId[i])
-        .collection('location')
-        .doc('coords')
-        .get()
-        .then(locationShot => {
-          console.log('Loc shot: ', locationShot.data().map);
-          var mapMarker = locationShot.data().map;
-          console.log('mapMarker shot: ', mapMarker);
-          marks.push(mapMarker);
-        });
-    }
-
-    this.setState({markers: marks});
   }
+
+//   getCurrentPosition() {
+//   return new Promise((resolve, reject) => {
+//     var loc = navigator.geolocation.getCurrentPosition(
+//       ({coords}) => resolve({
+//         latitude: coords.latitude, longitude: coords.longitude,
+//       }),
+//       reject,
+//       {enableHighAccuracy: false, timeout: 5000, maximumAge: 1000}
+//     );
+//     console.log('my location', loc);
+//   });
+// }
 
   render() {
     console.log(' ren markers state', this.state.markers);
@@ -303,18 +400,30 @@ class Home extends Component {
           initialRegion={{
             latitude: -1.301681,
             longitude: 36.874245,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}>
-          {this.state.markers.map(marker => (
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+          // initialRegion = {this.getCurrentPosition()}
+
+          // initialRegion = {this.state.region}
+          //       onRegionChange={ region => {
+          //           //console.log("Region Changed");
+          //           //this.setState({region});
+          //        } }
+          //       onRegionChangeComplete={ region => {
+          //           console.log('Region change complete', region);
+          //           this.setState({region:region});
+          //        } }
+          //       showsUserLocation={ true }
+
+          // initialRegion={this.state.region}
+          //       region={this.state.region}
+          >
+          {/* {this.state.markers.map(marker => (
             <MapView.Marker
-              coordinate={{
-                latitude: marker._latitude,
-                longitude: marker._longitude,
-              }}
-              title={marker.size}
+              coordinate={marker}
             />
-          ))}
+          ))} */}
         </MapView>
       </View>
     );

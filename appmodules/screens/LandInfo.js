@@ -19,31 +19,54 @@ class LandInfo extends Component {
     super(props);
     this.state = {
       data: props.route.params.landData,
+      imageData: [],
     };
   }
 
+  componentDidMount() {
+    this.fetchImages();
+  }
+
   initiatePurchase = () => {
-    const datax = this.state.data;
     // if (this.state.data.purchase_initiated === true) {
     //   this.moveToBidding();
     // } else {
     // set to true,
-    axios({
-      method: 'put',
-      url: '',
-      data: datax.land_id,
-      headers: {
-        Accept: 'application/json',
-      },
-    }).then(response => {
-      Alert.alert('Successfull', 'Data posted successfully', response, [
-        {
-          Text: 'Okay',
-        },
-      ]);
-    });
+    // axios({
+    //   method: 'put',
+    //   url: '',
+    //   data: datax.land_id,
+    //   headers: {
+    //     Accept: 'application/json',
+    //   },
+    // }).then(response => {
+    //   Alert.alert('Successfull', 'Data posted successfully', response, [
+    //     {
+    //       Text: 'Okay',
+    //     },
+    //   ]);
+    // });
     // start counter time,// make land bidding // go to bidding
     // }
+  };
+
+  fetchImages = () => {
+    axios
+      .get(
+        `http://192.168.0.101:8000/lands/SearchImage/${
+          this.state.data.land_id
+        }`,
+      )
+      // .then(res => res.json())
+      .then(res => {
+        const imageSearchRes = res.data;
+        this.setState({imageData: imageSearchRes});
+        console.log('imageSearchRes...', imageSearchRes);
+        //this.setState({loading: true});
+      })
+      .catch(error => {
+        console.log('Error fetching searchRes', error);
+      });
   };
 
   moveToBidding = () => {
@@ -159,8 +182,13 @@ const styles = StyleSheet.create({
   },
 
   descText: {
-    fontWeight: '400',
-    fontSize: 16,
+    fontWeight: '300',
+    top: 10,
+    fontSize: 13,
+    fontFamily: 'notoserif',
+    color: '#757575',
+    padding: 10,
+    paddingRight: 20,
   },
 
   description: {

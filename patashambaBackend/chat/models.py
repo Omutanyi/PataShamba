@@ -9,7 +9,7 @@ class chat_room(models.Model):
     land_id = models.ForeignKey(land, on_delete=models.CASCADE, null=True)
     room_open = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __int__(self):
         return self.room_id
 
 class participant(models.Model):
@@ -17,7 +17,7 @@ class participant(models.Model):
     user_id = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
     room_id = models.ForeignKey(chat_room, on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.participant_id
 
 class message(models.Model):
@@ -27,5 +27,5 @@ class message(models.Model):
     text = models.CharField(max_length=100, null=False)
     sent_at = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.message_id

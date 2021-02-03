@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import land, land_owner, like, save, bidding, bid, on_sale
+from .models import land, land_owner, like, save, bidding, bid, on_sale, land_image
 
 class LandAdmin(admin.ModelAdmin): 
   list_display = ('land_id', 'description', 'likes','size', 'town', 'address_pin', 'pub_date')
@@ -22,6 +22,9 @@ class BidAdmin(admin.ModelAdmin):
 class OnSaleAdmin(admin.ModelAdmin):
     list_display = ('on_sale_id', 'land_id','negotiable', 'pub_date')
 
+class imageAdmin(admin.ModelAdmin):
+    list_display = ('land_image_id', 'land_id','image', 'pub_date')
+
 # Register your models here.
 admin.site.register(land, LandAdmin)
 admin.site.register(land_owner, LandOwnerAdmin)
@@ -30,3 +33,4 @@ admin.site.register(save, SaveAdmin)
 admin.site.register(bidding, BiddingAdmin)
 admin.site.register(bid, BidAdmin)
 admin.site.register(on_sale, OnSaleAdmin)
+admin.site.register(land_image, imageAdmin)

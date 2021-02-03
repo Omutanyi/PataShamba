@@ -26,7 +26,7 @@ class land(models.Model):
     # negotiable = models.BooleanField(default=False)
     # purchase_initiated = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __int__(self):
         return self.land_id
 
 class land_owner(models.Model):
@@ -35,7 +35,7 @@ class land_owner(models.Model):
     user_id = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.land_owner_id
 
 class like(models.Model):
@@ -44,7 +44,7 @@ class like(models.Model):
     user_id = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.like_id
 
 class save(models.Model):
@@ -53,7 +53,7 @@ class save(models.Model):
     user_id = models.ForeignKey(user, on_delete=models.CASCADE, null=True)
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.save_id
 
 class bidding(models.Model):
@@ -61,7 +61,7 @@ class bidding(models.Model):
     land_id = models.ForeignKey(land, on_delete=models.SET_NULL, null=True)
     bidding_open = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __int__(self):
         return self.bidding_id
 
 class bid(models.Model):
@@ -71,7 +71,7 @@ class bid(models.Model):
     amount = models.CharField(max_length=100, null=True)
     bid_date = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.bid_id
 
 
@@ -83,5 +83,14 @@ class on_sale(models.Model):
     purchase_initiated = models.BooleanField(default=False)
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
+        return self.on_sale_id
+
+class land_image(models.Model):
+    land_image_id = models.AutoField(primary_key=True)
+    land_id = models.ForeignKey(land, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to ='uploads/% Y/% m/% d/', blank=True, null=True)
+    pub_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __int__(self):
         return self.on_sale_id

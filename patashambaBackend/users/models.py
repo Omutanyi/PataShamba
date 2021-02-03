@@ -12,7 +12,7 @@ class user(models.Model):
     credit_card = models.CharField(max_length=50, null=True)
     joining_date = models.DateTimeField(auto_now_add=True, null=True)
     
-    def __str__(self):
+    def __int__(self):
         return self.user_id
 
 class admin_message(models.Model):
@@ -21,5 +21,5 @@ class admin_message(models.Model):
     sender = models.ForeignKey(user, on_delete=models.SET_NULL, null=True)
     sent_at = models.DateTimeField(auto_now_add=True, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.admin_message_id
