@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',   
     'rest_framework',
+    'channels',
     'lands',
     'users',
     'chat',
@@ -79,6 +80,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'patashambaBackend.wsgi.application'
+
+ASGI_APPLICATION = 'patashambaBackend.asgi.application'
 
 
 # Database

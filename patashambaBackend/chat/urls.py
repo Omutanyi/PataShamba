@@ -9,6 +9,7 @@ urlpatterns = [
     path(r'ParticipantView/<int:pk>/', views.SingleParticipant.as_view()),
     path(r'ChatRoomView/', views.ChatRoomView.as_view()),
     path(r'ChatRoomView/<int:pk>/', views.SingleChatRoom.as_view()),
+    path('index/', views.index, name='index'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
