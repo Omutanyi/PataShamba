@@ -10,6 +10,7 @@ urlpatterns = [
     path(r'ChatRoomView/', views.ChatRoomView.as_view()),
     path(r'ChatRoomView/<int:pk>/', views.SingleChatRoom.as_view()),
     path('index/', views.index, name='index'),
+    path('<str:room_name>/', views.room, name='room'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
