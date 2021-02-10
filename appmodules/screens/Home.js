@@ -361,6 +361,7 @@ class Home extends Component {
               coordinate={{latitude: pin.lat, longitude: pin.lon}}
               key={pin.land_id}
               pinColor={'black'}
+              onPress={() => this.props.navigation.navigate('LandInfo', {landData: pin})}
             />
           ))
       );
