@@ -46,12 +46,50 @@
 
 import datetime
 import json
+from .models import message
+from users.models import user  
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 
 class ChatConsumer(WebsocketConsumer):
+
+    def fetch_messages(self, data):
+        messages = message.last_10_messages()
+        content = {
+            'messages': self.messages_to_json(messages)
+        }
+        self.send_message(content)
+
+    def messages_to_json(self, messages):
+        result = []
+        for message in messages:
+            result.append(self.message_to_json(message))
+        return result
+    
+    def message_to_json(self, message):
+        return {
+            'sender': message.sender,
+            'text': message.text,
+            'sent_at': str(message.sent_at)
+        }
+    def new_message(self, data):
+        # sender = data['sender']
+        # sender_user = user.objects.filter(username=sender)[0]
+        message = message.objects.create(
+            # sender = sender_user,
+            content = data['message'])
+        content = {
+            'command': 'new_message',
+            'message': self.message_to_json(message)
+        }
+        return self.send_chat_message(content)
+
+    commands = {
+        'fetch_messages': fetch_messages,
+        'new_message': new_message
+    }
     def connect(self):
         """
         Connect to a chat room
@@ -77,13 +115,11 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     def receive(self, text_data):
-        """
-        Receive a message and broadcast it to a room group
-        UTC time is included so the client can display it in each user's local time
-        """
-        
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        data = json.loads(text_data)
+        self.commands[data['command']](self, data)
+
+    def send_chat_message(self, message):
+        message = data['message']
         utc_time = datetime.datetime.now(datetime.timezone.utc)
         utc_time = utc_time.isoformat()
 
@@ -96,6 +132,9 @@ class ChatConsumer(WebsocketConsumer):
             }
         )
 
+    def send_message(self, message):
+        self.send(text_data=json.dumps({message}))
+
     def chat_message(self, event):
         """
         Receive a broadcast message and send it over a websocket
@@ -105,7 +144,4 @@ class ChatConsumer(WebsocketConsumer):
         utc_time = event['utc_time']
 
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'message': message,
-            'utc_time': utc_time,
-        }))
+        self.send(text_data=json.dumps({message}))

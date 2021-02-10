@@ -79,24 +79,6 @@ class login extends Component {
 
   //   // const getIpAdd = await axios.get()
 
-  // await axios
-  //   .get('https://127.0.0.1:8000/users/')
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     console.log('local api data', url, res);
-  //     // this.setState({
-  //     //   data: res,
-  //     //   error: null,
-  //     //   loading: false,
-  //     //   refreshing: false,
-  //     // });
-  //   })
-  //   .catch(error => {
-  //     console.log('fetching from api failed', url, error);
-  //     this.setState({error, loading: false});
-  //   });
-  // }
-
   login = () => {
     if (this.state.typedEmail === '' && this.state.password === '') {
       Alert.alert('Enter details to signin!');

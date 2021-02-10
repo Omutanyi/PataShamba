@@ -162,7 +162,6 @@ class Filter extends Component {
     } else {
       axios
         .get('http://192.168.0.101:8000/lands/')
-        // .then(res => res.json())
         .then(res => {
           const landRes = res.data;
           this.setState({data: landRes});
@@ -218,7 +217,7 @@ class Filter extends Component {
                     size={20}
                     name={'hearto'}
                   />
-                  <Text style={{color: 'red', left: 10}}>{data.likes}</Text>
+                  <Text style={{color: 'grey', left: 10}}>{data.likes}</Text>
                   <Icon style={filterStyles.cardIcon} size={20} name={'save'} />
                   <Text style={{color: 'grey', left: 10}}>Save</Text>
                   <Icon

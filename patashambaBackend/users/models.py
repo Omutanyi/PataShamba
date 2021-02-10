@@ -3,9 +3,10 @@ from django.db import models
 # Create your models here.
 
 class user(models.Model):
-    photo = models.ImageField(upload_to="assets/user/photos/", null=True, blank=True)
+    photo = models.ImageField(upload_to ='uploads/user/photos/% Y/% m/% d/', null=True, blank=True)
     user_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=20, null=False)
+    user = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField(null=True, unique=True)
     # phone = models.IntegerField(null=True)
     password = models.CharField(max_length=50, null=False)

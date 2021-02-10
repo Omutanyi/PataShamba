@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   Text,
@@ -6,11 +7,12 @@ import {
   TouchableOpacity,
   ScrollView,
   View,
-  Alert,
+  Image,
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Marker} from 'react-native-maps';
 import axios from 'axios';
+import {SliderBox} from 'react-native-image-slider-box';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -20,11 +22,12 @@ class LandInfo extends Component {
     this.state = {
       data: props.route.params.landData,
       imageData: [],
+      images: [],
     };
   }
 
   componentDidMount() {
-    this.fetchImages();
+    this.FetchImages();
   }
 
   initiatePurchase = () => {
@@ -50,8 +53,8 @@ class LandInfo extends Component {
     // }
   };
 
-  fetchImages = () => {
-    axios
+  async FetchImages() {
+    await axios
       .get(
         `http://192.168.0.101:8000/lands/SearchImage/${
           this.state.data.land_id
@@ -60,14 +63,20 @@ class LandInfo extends Component {
       // .then(res => res.json())
       .then(res => {
         const imageSearchRes = res.data;
-        this.setState({imageData: imageSearchRes});
-        console.log('imageSearchRes...', imageSearchRes);
+        //console.log('imageSearchRes...', imageSearchRes);
         //this.setState({loading: true});
+        var images = [];
+        imageSearchRes.forEach(item => {
+          images.push(item.image);
+        });
+        this.setState({images: images});
       })
       .catch(error => {
-        console.log('Error fetching searchRes', error);
+        console.log('Error fetching image Res', error.response.data);
       });
-  };
+
+    //this.RenderImages();
+  }
 
   moveToBidding = () => {
     console.log('moving to bidding');
@@ -76,10 +85,62 @@ class LandInfo extends Component {
     });
   };
 
+  RenderImages = () => {
+    var images = this.state.images;
+    if (images == null) images = [];
+    if (images.length === 0) {
+      return <Text>No images found</Text>;
+    } else {
+      return images.map(image => {
+        return (
+          <SliderBox
+            images={[image]}
+            sliderBoxHeight={200}
+            onCurrentImagePressed={index =>
+              console.warn(`image ${index} pressed`)
+            }
+            dotColor="#FFC107"
+            inactiveDotColor="#90A4AE"
+            paginationBoxVerticalPadding={20}
+            autoplay
+            circleLoop
+            resizeMethod={'resize'}
+            resizeMode={'cover'}
+            paginationBoxStyle={{
+              // position: 'absolute',
+              bottom: 0,
+              padding: 0,
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'center',
+              paddingVertical: 10,
+            }}
+            dotStyle={{
+              width: 10,
+              height: 10,
+              borderRadius: 7,
+              marginHorizontal: 0,
+              padding: 0,
+              margin: 0,
+              backgroundColor: 'rgba(128, 128, 128, 0.92)',
+            }}
+            ImageComponentStyle={{
+              borderRadius: 15,
+              width: '60%',
+              marginTop: 5,
+            }}
+            imageLoadingColor="#FFC107"
+          />
+        );
+      });
+    }
+  };
+
   render() {
-    console.log(this.state.data);
+    console.log('ren imageData..', this.state.imageData);
+
     return (
-      <ScrollView>
+      <ScrollView style={styles.primaryView}>
         <View style={styles.body}>
           <View style={styles.mapContainer}>
             <MapView
@@ -87,20 +148,18 @@ class LandInfo extends Component {
               style={styles.map}
               customMapStyle={this.mapStyle}
               initialRegion={{
-                latitude: -1.301681,
-                longitude: 36.874245,
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1,
+                latitude: this.state.data.lat,
+                longitude: this.state.data.lon,
+                latitudeDelta: 0.25,
+                longitudeDelta: 0.25,
               }}>
-              {/* {this.state.markers.map(marker => (
-              <MapView.Marker
+              <Marker
                 coordinate={{
-                  latitude: marker._latitude,
-                  longitude: marker._longitude,
+                  latitude: this.state.data.lat,
+                  longitude: this.state.data.lon,
                 }}
-                title={marker.size}
+                key={this.state.data.land_id}
               />
-            ))} */}
             </MapView>
           </View>
 
@@ -109,7 +168,7 @@ class LandInfo extends Component {
             <Text style={styles.divider}>|</Text>
             <Text style={styles.infoText}>{this.state.data.likes} likes</Text>
             <Text style={styles.divider}>|</Text>
-            <Text style={styles.infoText}>negotiable</Text>
+            <Text style={styles.infoText}>{this.state.data.town}</Text>
           </View>
 
           <View style={styles.description}>
@@ -128,6 +187,7 @@ class LandInfo extends Component {
                 <Text style={styles.btnTxt}>SHARE</Text>
               </TouchableOpacity>
             </View>
+            <View>{this.RenderImages()}</View>
             <TouchableOpacity style={styles.purchaseBtn}>
               <Text style={styles.purText}>PURCHASE</Text>
             </TouchableOpacity>
@@ -139,6 +199,10 @@ class LandInfo extends Component {
 }
 
 const styles = StyleSheet.create({
+  primaryView: {
+    backgroundColor: '#C8E6C9',
+  },
+
   body: {
     height: 600,
     width: WIDTH,

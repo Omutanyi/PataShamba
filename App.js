@@ -82,7 +82,7 @@ export default class App extends Component {
             ),
           }}
         />
-        <PataShambaTabs.Screen
+        {/* <PataShambaTabs.Screen
           name="Chat"
           component={Chat}
           options={{
@@ -94,7 +94,7 @@ export default class App extends Component {
               />
             ),
           }}
-        />
+        /> */}
         <PataShambaTabs.Screen
           name="More"
           component={More}

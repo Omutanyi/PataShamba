@@ -78,7 +78,7 @@ class Signup extends Component {
             },
           ],
         );
-        // this.props.navigation.navigate('Queue');//
+        this.props.navigation.navigate('Pata Shamba');
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {

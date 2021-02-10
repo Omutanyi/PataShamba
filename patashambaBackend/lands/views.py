@@ -9,6 +9,7 @@ from rest_framework import status
 from .serializers import LandSerializer, LandOwnerSerializer, LikeSerializer, SaveSerializer, BiddingSerializer, BidSerializer, OnSaleSerializer, ImageSerializer  
 from .models import land, land_owner, like, save, bidding, bid, on_sale, land_image
 from django.contrib.postgres.search import SearchVector, SearchQuery
+from django.contrib.gis.geos import GEOSGeometry
 
 # Create your views here.
 
@@ -23,6 +24,9 @@ class LandView(APIView):
     def get(self, request, format=None):
         queryset = land.objects.all()
         serializer = LandSerializer(queryset, many=True)
+        # for query in queryset:
+        #     centroid = GEOSGeometry.centroid.y
+        #     print('point is ...', query.address_pin.centroid)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -399,7 +403,7 @@ class SearchImage(APIView):
 
     def get(self, request, **kwargs):
         queryset = land_image.objects.all()
-        query = self.kwargs.get()
+        query = self.kwargs.get('pk')
         result = queryset.filter(land_image_id__icontains=query)
         serializer = ImageSerializer(result, many=True)
         return Response(serializer.data)
