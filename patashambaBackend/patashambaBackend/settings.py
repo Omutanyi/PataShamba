@@ -160,3 +160,7 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 ]
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR)
+
+MEDIA_URL = '/media/'

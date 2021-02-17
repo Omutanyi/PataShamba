@@ -15,6 +15,7 @@ import axios from 'axios';
 import {SliderBox} from 'react-native-image-slider-box';
 
 const {width: WIDTH} = Dimensions.get('window');
+const BaseUrl = 'http://192.168.0.101:8000';
 
 class LandInfo extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class LandInfo extends Component {
         //this.setState({loading: true});
         var images = [];
         imageSearchRes.forEach(item => {
-          images.push(item.image);
+          images.push(BaseUrl + item.image);
         });
         this.setState({images: images});
       })

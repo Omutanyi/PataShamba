@@ -10,6 +10,7 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
+import axios from 'axios';
 import {s} from '/home/javier/final_Project/PataShamba/components/styles/backbonestyles.js';
 
 // firebase authentication import
@@ -26,7 +27,7 @@ class Signup extends Component {
     this.state = {
       isAuthenticated: false,
       username: '',
-      phone: '',
+      // phone: '',
       email: '',
       password: '',
       passwordConfirm: '',
@@ -36,6 +37,7 @@ class Signup extends Component {
 
 
    signUp = () => {
+     let username = this.state.username;
      let email = this.state.email;
      let password = this.state.password;
      let passwordConfirm = this.state.passwordConfirm;
@@ -67,6 +69,16 @@ class Signup extends Component {
         this.state.email,
         this.state.password,
       )
+      .then(() => {
+        // post to postgres
+        const newUser = { title: 'React POST Request Example' };
+    axios.post('http://192.168.0.101:8000/users/', newUser)
+        .then(response => console.log('postUserId:', response.data.id ))
+        .catch(error => {
+            // this.setState({ errorMessage: error.message });
+            console.error('There was an error!', error);
+        });
+      })
       .then(() => {
      console.log('signup enabled');
         Alert.alert(

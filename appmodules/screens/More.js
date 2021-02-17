@@ -59,13 +59,13 @@ export class More extends Component {
           {/* <Text style={moreStyles.titleText}>ACCOUNT OPTIONS</Text> */}
           <TouchableOpacity
             style={moreStyles.optBtn}
-            onPress={() => this.props.navigation.navigate('Profile')}>
+            onPress={() => this.props.navigation.navigate('Experts')}>
             <Icon
               style={[{color: 'black', position: 'absolute', left: 90}]}
               size={17}
               name={'profile'}
             />
-            <Text style={moreStyles.btnText}>PROFILE SETTINGS</Text>
+            <Text style={moreStyles.btnText}>Experts</Text>
           </TouchableOpacity>
           {/* <TouchableOpacity
             style={moreStyles.optBtn}

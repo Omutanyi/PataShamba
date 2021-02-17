@@ -17,7 +17,7 @@ import LandInfo from '/home/javier/final_Project/PataShamba/appmodules/screens/L
 import SellOpt from '/home/javier/final_Project/PataShamba/appmodules/screens/SellOpt.js';
 import Saved from '/home/javier/final_Project/PataShamba/appmodules/screens/Saved.js';
 import PurchaseStatus from '/home/javier/final_Project/PataShamba/appmodules/screens/PurchaseStatus.js';
-import Profile from '/home/javier/final_Project/PataShamba/appmodules/screens/Profile.js';
+import Experts from '/home/javier/final_Project/PataShamba/appmodules/screens/Experts.js';
 import ContactUs from '/home/javier/final_Project/PataShamba/appmodules/screens/ContactUs.js';
 
 //import {Profile} from '/home/javier/final_Project/PataShamba/appmodules/screens/Profile.js';
@@ -293,8 +293,8 @@ export default class App extends Component {
             }}
           />
           <Stack.Screen
-            name="Profile"
-            component={Profile}
+            name="Experts"
+            component={Experts}
             options={{
               headerStyle: {
                 backgroundColor: '#388E3C',
