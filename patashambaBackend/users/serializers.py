@@ -4,7 +4,7 @@ from .models import user, admin_message, expert
 class userSerializer(serializers.ModelSerializer):
   class Meta:
     model = user
-    fields = ('photo', 'user_id', 'username', 'email', 'seller', 'credit_card', 'joining_date')
+    fields = ('photo', 'user_id', 'username', 'email', 'user', 'seller', 'credit_card', 'joining_date')
     # write_only_fields = ('password',)
     # read_only_fields = ('user_id',)
 

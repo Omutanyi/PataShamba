@@ -65,7 +65,7 @@ export class More extends Component {
               size={17}
               name={'profile'}
             />
-            <Text style={moreStyles.btnText}>Experts</Text>
+            <Text style={moreStyles.btnText}>EXPERTS</Text>
           </TouchableOpacity>
           {/* <TouchableOpacity
             style={moreStyles.optBtn}

@@ -96,25 +96,25 @@ class LandInfo extends Component {
         return (
           <SliderBox
             images={[image]}
-            sliderBoxHeight={200}
-            onCurrentImagePressed={index =>
-              console.warn(`image ${index} pressed`)
-            }
+            sliderBoxHeight={100}
+            // onCurrentImagePressed={index =>
+            //   console.warn(`image ${index} pressed`)
+            // }
             dotColor="#FFC107"
             inactiveDotColor="#90A4AE"
-            paginationBoxVerticalPadding={20}
+            // paginationBoxVerticalPadding={20}
             autoplay
             circleLoop
-            resizeMethod={'resize'}
-            resizeMode={'cover'}
+            // resizeMethod={'resize'}
+            // .resizeMode={'cover'}
             paginationBoxStyle={{
               // position: 'absolute',
-              bottom: 0,
-              padding: 0,
+              // bottom: 0,
+              // padding: 0,
               alignItems: 'center',
               alignSelf: 'center',
               justifyContent: 'center',
-              paddingVertical: 10,
+              // paddingVertical: 10,
             }}
             dotStyle={{
               width: 10,
@@ -126,9 +126,9 @@ class LandInfo extends Component {
               backgroundColor: 'rgba(128, 128, 128, 0.92)',
             }}
             ImageComponentStyle={{
-              borderRadius: 15,
-              width: '60%',
-              marginTop: 5,
+              borderRadius: 7,
+              width: '70%',
+              marginTop: 25,
             }}
             imageLoadingColor="#FFC107"
           />
@@ -174,7 +174,7 @@ class LandInfo extends Component {
 
           <View style={styles.description}>
             <Text style={styles.descText}>{this.state.data.description}</Text>
-            <View style={styles.btnView}>
+            {/* <View style={styles.btnView}>
               <TouchableOpacity style={styles.btn}>
                 <Text style={styles.btnTxt}>VIEW DOCS</Text>
               </TouchableOpacity>
@@ -187,8 +187,8 @@ class LandInfo extends Component {
               <TouchableOpacity style={styles.btn}>
                 <Text style={styles.btnTxt}>SHARE</Text>
               </TouchableOpacity>
-            </View>
-            <View>{this.RenderImages()}</View>
+            </View> */}
+            {this.RenderImages()}
             <TouchableOpacity style={styles.purchaseBtn}>
               <Text style={styles.purText}>PURCHASE</Text>
             </TouchableOpacity>
@@ -292,11 +292,12 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 0,
     marginTop: 35,
+    flex: 1,
     color: 'white',
-    marginHorizontal: 25,
+    // marginHorizontal: 25,
     alignItems: 'center',
     alignSelf: 'center',
-    backfaceVisibility: 'hidden',
+    // backfaceVisibility: 'hidden',
   },
 
   purText: {
