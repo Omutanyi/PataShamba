@@ -7,10 +7,62 @@ import {
   Dimensions,
   View,
 } from 'react-native';
+import firebase from '/home/javier/final_Project/PataShamba/src/config.js';
+import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
 
 class SellOpt extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // seller: false,
+      user: props.route.params.user,
+      // userId: '',
+    };
+  }
+
+  // componentDidMount() {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     console.log('userId..', user.uid);
+  //     axios
+  //       .get(`http://192.168.0.101:8000/users/searchuser/${user.uid}`)
+  //       .then(res => {
+  //         const searchRes = res.data;
+  //         this.setState({user: searchRes});
+  //         this.setState({
+  //           userId: searchRes.user_id,
+  //         });
+  //         // console.log('searchRes...', searchRes);
+  //         if (this.state.user.seller === true) {
+  //           // toggle seller
+  //           console.log('user is a seller');
+  //           this.setState({seller: true});
+  //         } else {
+  //           console.log('user is not seller');
+  //         }
+  //       })
+  //       .catch(error => {
+  //         console.log('Error fetching searchRes', error);
+  //       });
+  //   });
+  // }
+
+  sell = () => {
+    axios
+      .put(`http://192.168.0.101:8000/users/${this.state.user.user_id}`, {
+        seller: true,
+      })
+      .then(
+        response =>
+          console.log('put seller success. response:...', response.data.id),
+        this.props.navigation.navigate('AddLand'),
+      )
+      .catch(error => {
+        console.log('Error updating document', error);
+      });
+  };
+
   render() {
     return (
       <View style={optStyles.primaryView}>
@@ -45,8 +97,11 @@ class SellOpt extends Component {
           By continuing you agree to the terms and conditions set{' '}
         </Text>
         <TouchableOpacity style={optStyles.continue}>
-          {/* // onPress={this.props.navigation.navigate('SellUpload')}> */}
-          <Text style={optStyles.btnText}>Continue</Text>
+          onPress=
+          {() => {
+            this.sell();
+          }}
+          ><Text style={optStyles.btnText}>Continue</Text>
         </TouchableOpacity>
       </View>
     );

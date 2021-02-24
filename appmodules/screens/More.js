@@ -8,16 +8,54 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import firebase from '/home/javier/final_Project/PataShamba/src/config.js';
+import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
 
-export class More extends Component {
+class More extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seller: false,
+      user: [],
+      userId: '',
+    };
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({
+        userId: user.uid,
+      });
+      console.log('userId..', user.uid);
+      axios
+        .get(`http://192.168.0.101:8000/users/searchuser/${user.uid}`)
+        .then(res => {
+          const searchRes = res.data;
+          this.setState({user: searchRes});
+          // console.log('searchRes...', searchRes);
+          if (this.state.user.seller === true) {
+            // toggle seller
+            console.log('user is a seller');
+            this.setState({seller: true});
+          } else {
+            console.log('user is not seller');
+          }
+        })
+        .catch(error => {
+          console.log('Error fetching searchRes', error);
+        });
+    });
+  }
   render() {
     return (
       <ScrollView style={[{backgroundColor: '#C8E6C9'}]}>
         <View style={moreStyles.primaryView}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('SellOpt')}
+            onPress={() =>
+              this.props.navigation.navigate('SellOpt', {user: this.state.user})
+            }
             style={moreStyles.optBtn}>
             <Icon
               style={[{color: 'black', position: 'absolute', left: 90}]}

@@ -58,6 +58,20 @@ class SingleUser(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class SearchUser(APIView):
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def get(self, request, **kwargs):
+        queryset = user.objects.all()
+        query = self.kwargs.get('search')
+        print('the query is', query)
+        result = queryset.filter(user__icontains=query)
+        serializer = userSerializer(result, many=True)
+        return Response(serializer.data)
+
 class AdminMessageView(APIView):      
   # serializer_class = adminMessageSerializer        
   # queryset = admin_message.objects.all()   
