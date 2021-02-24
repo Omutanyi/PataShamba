@@ -10,7 +10,7 @@ import {
 
 const {width: WIDTH} = Dimensions.get('window');
 
-export class SellOpt extends Component {
+class SellOpt extends Component {
   render() {
     return (
       <View style={optStyles.primaryView}>

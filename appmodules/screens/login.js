@@ -37,47 +37,19 @@ class login extends Component {
   }
 
   componentDidMount() {
-    const conn = axios
-      .get('http://192.168.0.101:8000/users/')
-      // .then(res => res.json())
-      .then(res => {
-        const allRes = res.data;
-        console.log('res should load');
-        console.log('allRes', allRes);
-      })
-      .catch(error => {
-        console.log('Error fetching doc', error);
-      });
-
-    console.log('conn', conn);
-
-    // console.log('conn', conn);
-    //   fetch(url, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
+    // const conn = axios
+    //   .get('http://192.168.0.101:8000/users/')
+    //   // .then(res => res.json())
+    //   .then(res => {
+    //     const allRes = res.data;
+    //     console.log('res should load');
+    //     console.log('allRes', allRes);
     //   })
-    //     .then(response => response.json())
-    //     .then(responseData => {
-    //       // if (responseData.Error) {
-    //       //   Alert.alert('Errore');
-    //       // }
-    //       // global.utente = responseData;
-    //       console.log('responseData', responseData);
-    //     })
-    //     .catch(err => {
-    //       console.log('error', err);
-    //     });
+    //   .catch(error => {
+    //     console.log('Error fetching doc', error);
+    //   });
+    // console.log('conn', conn);
   }
-
-  // async fetchDataFromApi() {
-  //   const url = '127.0.0.1:8000/users/';
-  //   console.log('fetching from api');
-
-  //   this.setState({loading: true});
-
-  //   // const getIpAdd = await axios.get()
 
   login = () => {
     if (this.state.typedEmail === '' && this.state.password === '') {
