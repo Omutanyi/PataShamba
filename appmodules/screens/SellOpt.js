@@ -7,7 +7,7 @@ import {
   Dimensions,
   View,
 } from 'react-native';
-import firebase from '/home/javier/final_Project/PataShamba/src/config.js';
+// import firebase from '/home/javier/final_Project/PataShamba/src/config.js';
 import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -49,18 +49,24 @@ class SellOpt extends Component {
   // }
 
   sell = () => {
-    axios
-      .put(`http://192.168.0.101:8000/users/${this.state.user.user_id}`, {
-        seller: true,
-      })
-      .then(
-        response =>
-          console.log('put seller success. response:...', response.data.id),
-        this.props.navigation.navigate('AddLand'),
-      )
-      .catch(error => {
-        console.log('Error updating document', error);
-      });
+    // console.log('user', this.state.user);
+    this.state.user.forEach((data, index) =>
+      // console.log('user data', data.user_id),
+      // var newUser = {};
+      axios
+        .put(`http://192.168.0.101:8000/users/${data.user_id}/`, {
+          seller: true,
+          username: data.username,
+        })
+        .then(
+          response =>
+            console.log('put seller success. response:...', response.data.id),
+          // this.props.navigation.navigate('AddLand'),
+        )
+        .catch(error => {
+          console.log('Error updating document', error.response);
+        }),
+    );
   };
 
   render() {
@@ -96,12 +102,12 @@ class SellOpt extends Component {
           {' '}
           By continuing you agree to the terms and conditions set{' '}
         </Text>
-        <TouchableOpacity style={optStyles.continue}>
-          onPress=
-          {() => {
+        <TouchableOpacity
+          style={optStyles.continue}
+          onPress={() => {
             this.sell();
-          }}
-          ><Text style={optStyles.btnText}>Continue</Text>
+          }}>
+          <Text style={optStyles.btnText}>Continue</Text>
         </TouchableOpacity>
       </View>
     );

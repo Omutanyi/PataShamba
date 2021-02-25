@@ -34,36 +34,62 @@ class More extends Component {
         .then(res => {
           const searchRes = res.data;
           this.setState({user: searchRes});
-          // console.log('searchRes...', searchRes);
-          if (this.state.user.seller === true) {
-            // toggle seller
-            console.log('user is a seller');
-            this.setState({seller: true});
-          } else {
-            console.log('user is not seller');
-          }
+          console.log('user searchRes...', res.data);
+          res.data.forEach((data, index) => {
+            console.log('seller query..', data.seller);
+            if (data.seller === true) {
+              // toggle seller
+              console.log('user is a seller');
+              this.setState({seller: true});
+            } else {
+              console.log('user is not seller');
+            }
+          });
         })
         .catch(error => {
           console.log('Error fetching searchRes', error);
         });
     });
   }
+
+  sellerOption = () => {
+    if (this.state.seller === true) {
+      return (
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('AddLand')}
+          style={moreStyles.optBtn}>
+          <Icon
+            style={[{color: 'black', position: 'absolute', left: 90}]}
+            size={17}
+            name={'creditcard'}
+          />
+          <Text style={moreStyles.btnText}>ADD LAND</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={
+            () =>
+              this.props.navigation.navigate('SellOpt', {user: this.state.user})
+            // this.props.navigation.navigate('AddLand')
+          }
+          style={moreStyles.optBtn}>
+          <Icon
+            style={[{color: 'black', position: 'absolute', left: 90}]}
+            size={17}
+            name={'creditcard'}
+          />
+          <Text style={moreStyles.btnText}>OPT TO SELL</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
   render() {
     return (
       <ScrollView style={[{backgroundColor: '#C8E6C9'}]}>
         <View style={moreStyles.primaryView}>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('SellOpt', {user: this.state.user})
-            }
-            style={moreStyles.optBtn}>
-            <Icon
-              style={[{color: 'black', position: 'absolute', left: 90}]}
-              size={17}
-              name={'creditcard'}
-            />
-            <Text style={moreStyles.btnText}>OPT TO SELL</Text>
-          </TouchableOpacity>
+          {this.sellerOption()}
           <TouchableOpacity
             style={moreStyles.optBtn}
             onPress={() => this.props.navigation.navigate('Saved')}>

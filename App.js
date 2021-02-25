@@ -15,6 +15,7 @@ import LandInfo from '/home/javier/final_Project/PataShamba/appmodules/screens/L
 
 // screens in the more tab
 import SellOpt from '/home/javier/final_Project/PataShamba/appmodules/screens/SellOpt.js';
+import AddLand from '/home/javier/final_Project/PataShamba/appmodules/screens/AddLand.js';
 import Saved from '/home/javier/final_Project/PataShamba/appmodules/screens/Saved.js';
 import PurchaseStatus from '/home/javier/final_Project/PataShamba/appmodules/screens/PurchaseStatus.js';
 import Experts from '/home/javier/final_Project/PataShamba/appmodules/screens/Experts.js';
@@ -234,6 +235,20 @@ export default class App extends Component {
                 backgroundColor: '#388E3C',
               },
               headerTitle: () => <Text>Opt To Sell</Text>,
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="AddLand"
+            component={AddLand}
+            options={{
+              headerStyle: {
+                backgroundColor: '#388E3C',
+              },
+              // headerTitle: () => <Text>Opt To Sell</Text>,
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
