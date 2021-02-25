@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {
+  ScrollView,
   View,
   TextInput,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
   Text,
+  Alert,
 } from 'react-native';
+import axios from 'axios';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -29,94 +32,112 @@ class AddLand extends Component {
   checkInputs = () => {};
 
   postLand = () => {
-    console.log('post land');
+    const location = this.state.location;
+    const size = this.state.size;
+    const description = this.state.description;
+    const price = this.state.price;
+    const lat = this.state.lat;
+    const lon = this.state.lon;
+
+    const newLand = {
+      town: location,
+      size: size,
+      description: description,
+      lat: lat,
+      lon: lon,
+    };
+    axios
+      .post('http://192.168.0.101:8000/lands/', newLand)
+      .then(response => {
+        console.log('Id for new posted land:', response.data.id);
+      })
+      .then(() => {
+        Alert.alert('Successfull', 'Your land has been posted successfully', [
+          {
+            Text: 'Okay',
+          },
+        ]);
+        this.props.navigation.navigate('Pata Shamba');
+      })
+      .catch(error => {
+        // this.setState({ errorMessage: error.message });
+        console.error('There was an error!', error);
+      });
   };
 
   render() {
     return (
-      <View style={styles.primaryView}>
-        <Text style={styles.primaryText}>Post land to sell</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={'Location'}
-          // value={this.state.username}
-          placeholderTextColor={'black'}
-          // onChangeText={text => {
-          //   this.setState({username: text});
-          // }}
-          underlineColorAndroid="transparent"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={'Size'}
-          // value={this.state.email}
-          placeholderTextColor={'black'}
-          // onChangeText={text => {
-          //   this.setState({email: text});
-          // }}
-          underlineColorAndroid="transparent"
-        />
-        {/* <TextInput
-          style={styles.input}
-          placeholder={'Phone'}
-          value={this.state.phone}
-          placeholderTextColor={'black'}
-          onChangeText={(number) => {
-              this.setState({phone: number});
+      <ScrollView>
+        <View style={styles.primaryView}>
+          <Text style={styles.primaryText}>Post land to sell</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={'Location'}
+            value={this.state.location}
+            placeholderTextColor={'black'}
+            onChangeText={text => {
+              this.setState({location: text});
             }}
-          underlineColorAndroid="transparent"
-        /> */}
-        <TextInput
-          style={styles.input}
-          placeholder={'Description'}
-          // value={this.state.password}
-          placeholderTextColor={'black'}
-          // onChangeText={text => {
-          //   this.setState({password: text});
-          // }}
-          underlineColorAndroid="transparent"
-          // secureTextEntry={true}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={'Price'}
-          // value={this.state.password}
-          placeholderTextColor={'black'}
-          // onChangeText={text => {
-          //   this.setState({password: text});
-          // }}
-          underlineColorAndroid="transparent"
-          // secureTextEntry={true}
-        />
-        <Text style={styles.primaryText}>Location coordinates</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={'Latitude'}
-          // value={this.state.password}
-          placeholderTextColor={'black'}
-          // onChangeText={text => {
-          //   this.setState({password: text});
-          // }}
-          underlineColorAndroid="transparent"
-          // secureTextEntry={true}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={'Longitude'}
-          // value={this.state.password}
-          placeholderTextColor={'black'}
-          // onChangeText={text => {
-          //   this.setState({password: text});
-          // }}
-          underlineColorAndroid="transparent"
-          // secureTextEntry={true}
-        />
-        <TouchableOpacity
-          style={styles.signupBtn}
-          onPress={() => this.postLand()}>
-          <Text style={styles.btnText}>POST LAND</Text>
-        </TouchableOpacity>
-      </View>
+            underlineColorAndroid="transparent"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={'Size'}
+            value={this.state.size}
+            placeholderTextColor={'black'}
+            onChangeText={text => {
+              this.setState({size: text});
+            }}
+            underlineColorAndroid="transparent"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={'Description'}
+            value={this.state.description}
+            placeholderTextColor={'black'}
+            onChangeText={text => {
+              this.setState({description: text});
+            }}
+            underlineColorAndroid="transparent"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={'Price'}
+            value={this.state.price}
+            placeholderTextColor={'black'}
+            onChangeText={text => {
+              this.setState({price: text});
+            }}
+            underlineColorAndroid="transparent"
+          />
+          <Text style={styles.primaryText}>Location coordinates</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={'Latitude'}
+            value={this.state.lat}
+            placeholderTextColor={'black'}
+            onChangeText={text => {
+              this.setState({lat: text});
+            }}
+            underlineColorAndroid="transparent"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={'Longitude'}
+            value={this.state.lon}
+            placeholderTextColor={'black'}
+            onChangeText={text => {
+              this.setState({lon: text});
+            }}
+            underlineColorAndroid="transparent"
+          />
+          <TouchableOpacity
+            style={styles.signupBtn}
+            onPress={() => this.postLand()}>
+            <Text style={styles.btnText}>POST LAND</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }

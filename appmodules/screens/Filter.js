@@ -206,12 +206,7 @@ class Filter extends Component {
                 <Text style={filterStyles.descriptionText}>{data.size}</Text>
                 {/* <Text style={filterStyles.priceText}>Kshs. {data.Price}</Text> */}
                 <Text style={filterStyles.detailsText}>{data.description}</Text>
-                <View style={filterStyles.iconContainer}>
-                  {/* <Icon
-                  style={filterStyles.cardIcon}
-                  size={20}
-                  name={'message1'}
-                /> */}
+                {/* <View style={filterStyles.iconContainer}>
                   <Icon
                     style={filterStyles.cardIcon}
                     size={20}
@@ -227,12 +222,7 @@ class Filter extends Component {
                     onPress={this.showDetails(index)}
                   />
                   <Text style={{color: 'grey', left: 10}}>Details</Text>
-                  {/* <Icon
-                  style={filterStyles.cardIcon}
-                  size={20}
-                  name={'sharealt'}
-                /> */}
-                </View>
+                </View> */}
               </View>
             </View>
           </TouchableWithoutFeedback>
